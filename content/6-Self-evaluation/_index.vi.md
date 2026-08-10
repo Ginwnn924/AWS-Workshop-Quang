@@ -6,13 +6,13 @@ chapter: false
 pre: " <b> 6. </b> "
 ---
 
-Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam — chương trình First Cloud AI Journey** từ **22/06/2026** đến **14/08/2026**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.
+Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam — chương trình First Cloud AI Journey** từ **22/06/2026** đến **14/08/2026**, em đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.
 
-Tôi tham gia dự án **Vietnamese Legal RAG Chatbot** — xây dựng hệ thống hỏi đáp văn bản pháp luật Việt Nam trên AWS, qua đó cải thiện kỹ năng **lập trình Python**, **thiết kế kiến trúc cloud**, **triển khai dịch vụ AWS**, **viết báo cáo kỹ thuật** và **giao tiếp với mentor**.
+Em tham gia dự án **Vietnamese Legal RAG Chatbot** — xây dựng hệ thống hỏi đáp văn bản pháp luật Việt Nam trên AWS, qua đó cải thiện kỹ năng **lập trình Python**, **thiết kế kiến trúc cloud**, **triển khai dịch vụ AWS**, **viết báo cáo kỹ thuật** và **giao tiếp với mentor**.
 
-Về tác phong, tôi luôn cố gắng hoàn thành nhiệm vụ đúng deadline worklog hàng tuần, tuân thủ nội quy FCAJ, và chủ động trao đổi với mentor khi gặp blocker kỹ thuật (ví dụ cấu hình pgvector, Bedrock model access).
+Về tác phong, em luôn cố gắng hoàn thành nhiệm vụ đúng deadline worklog hàng tuần, tuân thủ nội quy FCAJ, và chủ động trao đổi với mentor khi gặp blocker kỹ thuật (ví dụ cấu hình pgvector, Bedrock model access).
 
-Để phản ánh khách quan quá trình thực tập, tôi xin tự đánh giá bản thân dựa trên các tiêu chí dưới đây:
+Để phản ánh khách quan quá trình thực tập, em xin tự đánh giá bản thân dựa trên các tiêu chí dưới đây:
 
 | STT | Tiêu chí | Mô tả | Tốt | Khá | Trung bình |
 | --- | --- | --- | --- | --- | --- |
@@ -44,4 +44,4 @@ Về tác phong, tôi luôn cố gắng hoàn thành nhiệm vụ đúng deadlin
 
 ### Bài học rút ra
 
-Thực tập FCAJ giúp tôi chuyển từ học lý thuyết đám mây sang **làm dự án thật** với AWS. RAG không chỉ là gọi API LLM mà là cả pipeline dữ liệu, vector search, bảo mật và vận hành. Tôi sẽ tiếp tục phát triển dự án legal chatbot và tham gia cộng đồng AWS Study Group để củng cố kiến thức.
+Thực tập FCAJ giúp em chuyển từ học lý thuyết đám mây sang **làm dự án thật** với AWS. RAG không chỉ là gọi API LLM mà là cả pipeline dữ liệu, vector search, bảo mật và vận hành. Em sẽ tiếp tục phát triển dự án legal chatbot và tham gia cộng đồng AWS Study Group để củng cố kiến thức.

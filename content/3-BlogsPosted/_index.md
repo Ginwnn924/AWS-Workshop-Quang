@@ -6,17 +6,16 @@ chapter: false
 pre: " <b> 3. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
+During my FCAJ internship I read and took notes on several AWS blog posts about Generative AI, Amazon Bedrock AgentCore, and serverless architecture. The content below is a personal summary of what I researched and learned — not a verbatim copy of the original articles.
 
-This section will list and introduce the blogs you have posted to [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj). For example:
+### [Blog 1 — Serverless real-time voice AI on AWS](3.1-Blog1/)
 
-###  [Blog 1 - SESSION POLICIES IN AMAZON EKS POD IDENTITY](3.1-Blog1/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+Research notes on a voice AI pattern using AWS AppSync Events, Amazon Nova Sonic, and Bedrock AgentCore.
 
-###  [Blog 2 - ...](3.2-Blog2/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+### [Blog 2 — Priority-based message processing with Amazon MQ and App Runner](3.2-Blog2/)
 
-###  [Blog 3 - ...](3.3-Blog3/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+Research notes on priority queuing with Amazon MQ, DynamoDB, App Runner, and real-time updates via WebSocket.
+
+### [Blog 3 — Reducing SMS OTP fraud with Vonage and Cognito](3.3-Blog3/)
+
+Notes on Silent Authentication, Identity Insights, and the Cognito CUSTOM_AUTH flow.

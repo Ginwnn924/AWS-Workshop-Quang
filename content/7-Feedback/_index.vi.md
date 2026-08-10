@@ -11,19 +11,19 @@ pre: " <b> 7. </b> "
 
 **1. Môi trường làm việc**
 
-Môi trường FCAJ thân thiện và cởi mở. Các bạn thực tập và mentor sẵn sàng trao đổi trên nhóm chat khi gặp lỗi AWS hoặc vướng lab workshop — ví dụ tuần 2 khi tôi không SSH được vào EC2 vì security group sai, bạn trong nhóm chỉ tôi dùng Reachability Analyzer trong vài phút. Không gian học tập (online/offline tùy buổi) giúp tập trung làm lab VPC Endpoint và dự án cá nhân. Tôi mong có thêm buổi **lightning talk** ngắn (5 phút/dự án) để học hỏi lẫn nhau ngoài mentor. Nên có kênh **FAQ theo tuần** (lỗi CloudFormation, IAM deny) để search lại thay vì hỏi lặp.
+Môi trường FCAJ thân thiện và cởi mở. Các bạn thực tập và mentor sẵn sàng trao đổi trên nhóm chat khi gặp lỗi AWS hoặc vướng lab workshop — ví dụ tuần 2 khi em không SSH được vào EC2 vì security group sai, bạn trong nhóm chỉ em dùng Reachability Analyzer trong vài phút. Không gian học tập (online/offline tùy buổi) giúp tập trung làm lab VPC Endpoint và dự án cá nhân. Chúng em mong có thêm buổi **lightning talk** ngắn (5 phút/dự án) để học hỏi lẫn nhau ngoài mentor. Nên có kênh **FAQ theo tuần** (lỗi CloudFormation, IAM deny) để search lại thay vì hỏi lặp.
 
 **2. Sự hỗ trợ của mentor / team admin**
 
-Mentor hướng dẫn rõ ràng khi tôi chưa quen Bedrock model access hay cấu hình RDS security group. Thay vì đưa đáp án ngay, mentor gợi ý hướng đọc tài liệu AWS — giúp tôi tự debug và nhớ lâu hơn. Team admin hỗ trợ kịp thời các thủ tục, deadline nộp báo cáo và template Hugo. Tôi đánh giá cao việc được phép **thử-sai** trên AWS account thực tập với budget alert — tuần 4 tôi lỡ để NAT Gateway chạy qua cuối tuần, cảnh báo budget là bài học thực tế về chi phí cloud.
+Mentor hướng dẫn rõ ràng khi em chưa quen Bedrock model access hay cấu hình RDS security group. Thay vì đưa đáp án ngay, mentor gợi ý hướng đọc tài liệu AWS — giúp em tự debug và nhớ lâu hơn. Team admin hỗ trợ kịp thời các thủ tục, deadline nộp báo cáo và template Hugo. Em đánh giá cao việc được phép **thử-sai** trên AWS account thực tập với budget alert — tuần 4 em lỡ để NAT Gateway chạy qua cuối tuần, cảnh báo budget là bài học thực tế về chi phí cloud.
 
 **3. Sự phù hợp giữa công việc và chuyên ngành học**
 
-Dự án Legal RAG Chatbot rất phù hợp ngành CNTT: kết hợp backend (Python/FastAPI), AI (RAG, LLM), cloud (AWS) và viết báo cáo kỹ thuật. Phần workshop S3/VPC bổ sung kiến thức mạng — trước đây ở trường tôi ít được thực hành VPC Endpoint. Chương trình mở rộng đúng hướng so với giảng đường.
+Dự án Legal RAG Chatbot rất phù hợp ngành CNTT: kết hợp backend (Python/FastAPI), AI (RAG, LLM), cloud (AWS) và viết báo cáo kỹ thuật. Phần workshop S3/VPC bổ sung kiến thức mạng — trước đây ở trường em ít được thực hành VPC Endpoint. Chương trình mở rộng đúng hướng so với giảng đường.
 
 **4. Cơ hội học hỏi & phát triển kỹ năng**
 
-Tôi học được nhiều kỹ năng mới:
+Em học được nhiều kỹ năng mới:
 
 * Triển khai và cấu hình dịch vụ AWS (EC2, S3, RDS, Lambda, Cognito, Bedrock...).
 * Thiết kế pipeline RAG end-to-end, không chỉ gọi API chatbot có sẵn.
@@ -34,7 +34,7 @@ Tài liệu [Cloud Journey](https://cloudjourney.awsstudygroup.com/) và worksho
 
 **5. Văn hóa & tinh thần đồng đội**
 
-Văn hóa FCAJ tích cực: mọi người tôn trọng lẫn nhau dù khác trường hoặc đề tài. Khi gần deadline workshop cleanup, các bạn nhắc nhau xóa resource tránh phát sinh chi phí — thể hiện tinh thần **cloud cost awareness** rất thực tế. Tuần 3 viết Proposal, nhóm cùng review sơ đồ kiến trúc và phát hiện thiếu route VPC Endpoint trước khi deploy. Tôi cảm thấy được coi là thành viên, không chỉ "người đi học cho xong".
+Văn hóa FCAJ tích cực: mọi người tôn trọng lẫn nhau dù khác trường hoặc đề tài. Khi gần deadline workshop cleanup, các bạn nhắc nhau xóa resource tránh phát sinh chi phí — thể hiện tinh thần **cloud cost awareness** rất thực tế. Tuần 3 viết Proposal, nhóm cùng review sơ đồ kiến trúc và phát hiện thiếu route VPC Endpoint trước khi deploy. Em cảm thấy được coi là thành viên, không chỉ "người đi học cho xong".
 
 **6. Chính sách / phúc lợi cho thực tập sinh**
 
@@ -44,7 +44,7 @@ Chương trình cung cấp AWS account lab, mentor và lộ trình rõ ràng 8 t
 
 **Điều bạn hài lòng nhất trong thời gian thực tập?**
 
-Được làm dự án **thật** (legal chatbot RAG trên AWS) thay vì chỉ làm slide lý thuyết. Khi demo chatbot trả lời đúng câu hỏi về Luật Đất đai kèm trích dẫn chunk nguồn, tôi thấy rõ giá trị của 8 tuần nỗ lực. Deploy site Hugo báo cáo đầy đủ worklog + proposal + workshop cũng là milestone portfolio cụ thể.
+Được làm dự án **thật** (legal chatbot RAG trên AWS) thay vì chỉ làm slide lý thuyết. Khi demo chatbot trả lời đúng câu hỏi về Luật Đất đai kèm trích dẫn chunk nguồn, em thấy rõ giá trị của 8 tuần nỗ lực. Deploy site Hugo báo cáo đầy đủ worklog + proposal + workshop cũng là milestone portfolio cụ thể.
 
 **Điều bạn nghĩ chương trình cần cải thiện cho thực tập sinh sau?**
 
@@ -61,9 +61,9 @@ Chương trình cung cấp AWS account lab, mentor và lộ trình rõ ràng 8 t
 
 * Tổ chức thêm **hackathon mini** cuối kỳ (1–2 ngày) để các team demo cross-review.
 * Mở rộng tài liệu tiếng Việt cho Amazon Bedrock và pgvector trên RDS — hiện phần lớn docs AWS là tiếng Anh.
-* Tôi mong được **tiếp tục đóng góp** vào repo open-source workshop hoặc blog AWS Study Group sau khi kết thúc thực tập.
+* Em mong được **tiếp tục đóng góp** vào repo open-source workshop hoặc blog AWS Study Group sau khi kết thúc thực tập.
 * Góp ý khác: Nên có kênh Slack/Discord lưu trữ Q&A theo tuần — dễ search lại câu hỏi về lỗi CloudFormation, IAM policy thay vì hỏi lại nhiều lần.
 
 ---
 
-Cảm ơn team FCAJ, mentor và AWS Study Group đã tạo môi trường học tập bổ ích trong suốt kỳ thực tập của tôi.
+Em cảm ơn team FCAJ, mentor và AWS Study Group đã tạo môi trường học tập bổ ích trong suốt kỳ thực tập.

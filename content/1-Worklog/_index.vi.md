@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1. </b> "
 ---
 
-Trong suốt **8 tuần** thực tập tại chương trình **First Cloud AI Journey (FCAJ)** (từ **22/06/2026** đến **14/08/2026**), tôi ghi lại quá trình tìm hiểu, nghiên cứu và triển khai dự án **Vietnamese Legal Chatbot** — hệ thống hỏi đáp văn bản pháp luật Việt Nam trên nền tảng AWS và RAG.
+Trong suốt **8 tuần** thực tập tại chương trình **First Cloud AI Journey (FCAJ)** (từ **22/06/2026** đến **14/08/2026**), chúng em ghi lại quá trình tìm hiểu, nghiên cứu và triển khai dự án **Vietnamese Legal Chatbot** — hệ thống hỏi đáp văn bản pháp luật Việt Nam trên nền tảng AWS và RAG.
 
 **Tuần 1:** [Làm quen FCAJ, AWS cơ bản và nghiên cứu RAG](1.1-week1/)
 

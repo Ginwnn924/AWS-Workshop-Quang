@@ -1,22 +1,21 @@
 ---
-title: "Các bài blogs đã đăng"
+title: "Các bài blogs đã đọc"
 date: 2024-01-01
 weight: 3
 chapter: false
 pre: " <b> 3. </b> "
 ---
 
-{{% notice warning %}}  
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+Trong quá trình thực tập FCAJ, chúng em đọc và ghi chú lại một số bài blog AWS về Generative AI, Amazon Bedrock AgentCore và kiến trúc serverless. Nội dung dưới đây là tóm tắt theo góc nhìn của nhóm — những gì chúng em tìm hiểu và rút ra, không sao chép nguyên văn tài liệu gốc.
 
-Tại đây sẽ là phần liệt kê, giới thiệu các blogs mà các bạn đã đăng trên [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj). Ví dụ:
+### [Blog 1 — Voice AI real-time serverless trên AWS](3.1-Blog1/)
 
-###  [Blog 1 - SESSION POLICIES TRONG AMAZON EKS POD IDENTITY](3.1-Blog1/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Ghi chú nghiên cứu về pattern voice AI dùng AWS AppSync Events, Amazon Nova Sonic và Bedrock AgentCore.
 
-###  [Blog 2 - ...](3.2-Blog2/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+### [Blog 2 — Xử lý message theo priority với Amazon MQ và App Runner](3.2-Blog2/)
 
-###  [Blog 3 - ...](3.3-Blog3/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Ghi chú về priority queuing với Amazon MQ, DynamoDB, App Runner và cập nhật real-time qua WebSocket.
+
+### [Blog 3 — Giảm gian lận SMS OTP với Vonage và Cognito](3.3-Blog3/)
+
+Ghi chú về Silent Authentication, Identity Insights và luồng CUSTOM_AUTH trên Amazon Cognito.
