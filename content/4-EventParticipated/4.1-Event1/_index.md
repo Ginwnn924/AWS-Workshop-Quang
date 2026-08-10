@@ -1,48 +1,80 @@
 ---
 title: "Event 1"
-date: 2026-08-01
+date: 2026-08-08
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-# Summary Report: "Agent Forge - Deepdive Day 1"
+# Event Summary: "Agent Forge - Deepdive Day 2"
 
-### 1. Event Overview
+**Time:** 9:00 AM – 12:00 PM, Saturday, August 8, 2026
 
-- **Date & Time:** 9:00 AM – 12:00 PM, Saturday, August 1, 2026
-- **Location:** 26th Floor, Bitexco Financial Tower, 2 Hai Trieu St., Saigon, Ho Chi Minh City 700000, Vietnam
-- **Role:** Attendee
+**Location:** 26th Floor, Bitexco Financial Tower, 2 Hai Trieu Street, Saigon, Ho Chi Minh City 700000, Vietnam
 
-### 2. Speaker List
+**Role:** Attendee
 
-- **Nghia Tran** — Agentic SA
-- **Anh Pham** — Cloud Consultant G-AsiaPacific Vietnam
+**Speakers:**
 
-### 3. Key Content
+- Nghia Tran — Agentic SA
+- Anh Pham — Cloud Consultant G-AsiaPacific Vietnam
 
-This is an advanced workshop (L300) on Amazon Bedrock Agent Core, designed for enterprises aiming to build autonomous AI systems (Agentic AI) at production-ready scale.
+## Main content
 
-#### Theoretical Part
+The theory session covered the following topics:
 
-The theoretical session covers the following main topics:
+### Memory
 
-- **Introduction to Agentic AI:** Explaining autonomous AI concepts, step-by-step planning and execution capabilities, as well as autonomy levels ranging from *deterministic workflow* to *fully autonomous*.
-- **Amazon Bedrock Agent Core:** A service that helps manage, deploy, and operate AI agents. This system complies with industry standards regarding performance, scalability, and security.
-- **Core Components of Agent Core:**
-  - **Runtime Environment:** A serverless environment for running agents, utilizing Firecracker MicroVM technology for resource isolation.
-  - **Identity:** Authentication and authorization management layer using JSON Web Tokens (JWT) and Workload Access Token.
-  - **Gateway:** A middleware layer connecting agents to various tools via the Model Context Protocol (MCP), supporting centralized control and human-in-the-loop features.
-- **Security & Connectivity:** Discussing how to connect agents to VPC networks using AWS PrivateLink to ensure internal data is not exposed to the public internet.
+- Memory helps agents retain information, go beyond context window limits, and personalize experiences.
+- **Short-term Memory:** stores raw conversation data for fast retrieval of recent context.
+- **Long-term Memory:** extracts insights and knowledge, stored as vectors for long-term use.
+- **Memory Strategies:** Summary, User Preference, Semantic, and Episodic.
+- **Namespace:** hierarchical organization (e.g. `/Strategy/Actor/Session`) to narrow search scope, reduce tokens, and speed up retrieval.
 
-#### Practical Hands-on Part
+### Evaluations
 
-Focuses on guiding participants through hands-on practice with Runtime, Gateway, and Identity services introduced in the theory session, as well as setting up necessary environments for hands-on exercises.
+- Evaluations ensure agents are accurate, useful, and safe; they detect hallucination, reasoning errors, and inappropriate tool use.
+- Two modes:
+  - **On-demand Evaluation:** proactive assessment during development.
+  - **Online Evaluation:** continuous production monitoring via telemetry and metrics.
+- Three evaluation levels:
+  - **Session level** — entire session.
+  - **Trace level** — each response.
+  - **Span level** — tool usage and parameters.
+- A **Judge** analyzes agent activity; results feed into Observability for SME review and intervention.
 
-### 4. Key Takeaways
+### Observability
 
-Through the **Agent Forge - Deepdive Day 1** event, I gained a clearer understanding of Agentic AI concepts and how to build AI Agents capable of autonomous planning, task execution, and interaction with external services. I also grasped the architecture of Amazon Bedrock Agent Core, including Runtime, Identity, and Gateway components, as well as their respective roles in deploying and operating AI Agents. Furthermore, I recognized the critical importance of security in AI system deployment by combining Amazon VPC and AWS PrivateLink. The practical session helped me become familiar with environment configuration workflows and Bedrock Agent Core service deployment, bridging the gap between theory and real-world applications.
+- Observability helps developers understand, debug, and optimize agent internals.
+- Three core components:
+  - **Logs** — what happened.
+  - **Traces** — how it happened.
+  - **Metrics** — latency, token cost, error rate.
+- Also: OpenTelemetry, real-time monitoring, alerts, and data hierarchy Session → Trace → Span/Sub-span.
 
-### Event Photos
+### AgentCore Components
 
-![Agent Forge Day 1](/images/4-Events/ev1-1.jpg)
+- **Registry:** central management and reuse of agent skills, tools, and APIs (Admin, Publisher, Consumer).
+- **Harness:** minimal framework to bootstrap agents from Model + System Prompt + Tool.
+- **Tools:** external system interaction, actions, and real-time data/API access.
+- **Payments:** agent payments; Stripe and Coinbase supported.
+- **Optimization:** uses evaluation and observability data for A/B testing, red teaming, and self-optimizing loops.
+- **Policy:** behavior, security, and compliance controls; human-in-the-loop, Cedar, strict/permissive modes, least privilege.
+
+### Hands-on session
+
+Deployment with **Agent SDK**, **AWS Bedrock** setup, and **CLI** workflows to create projects, deploy, and test agents on AWS.
+
+## Lessons learned
+
+Through Agent Forge - Deepdive Day 2, I gained a clearer picture of what it takes to build and operate AI agents in production — especially the roles of Memory, Evaluations, and Observability for context, quality assessment, and monitoring.
+
+I also understand how AgentCore components (Registry, Harness, Tools, Policy, Optimization) work together to manage, scale, secure, and continuously improve agents. Least privilege and human-in-the-loop stood out as critical for controlling agent actions.
+
+The hands-on portion introduced Agent SDK, AWS Bedrock, and AWS CLI — from project setup through deployment and testing on AWS.
+
+## Event photos
+
+![Agent Forge Day 2](/images/4-Events/ev2-1.jpg)
+
+![Agent Forge Day 2](/images/4-Events/ev2-2.jpg)

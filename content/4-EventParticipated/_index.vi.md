@@ -6,20 +6,7 @@ chapter: false
 pre: " <b> 4. </b> "
 ---
 
-
-
 ### [Event 1](4.1-Event1/)
-&emsp;**Tên sự kiện:** Agent Forge - Deepdive Day 1
-
-&emsp;**Thời gian:** 9:00–12:00, Thứ 7, 01/08/2026
-
-&emsp;**Địa điểm:** Tầng 26, Bitexco Financial Tower, 2 Đ. Hải Triều, Sài Gòn, Hồ Chí Minh
-
-&emsp;**Vai trò trong sự kiện:** Người tham dự
-
-
-
-### [Event 2](4.2-Event2/)
 &emsp;**Tên sự kiện:** Agent Forge - Deepdive Day 2
 
 &emsp;**Thời gian:** 9:00–12:00, Thứ 7, 08/08/2026
@@ -28,7 +15,7 @@ pre: " <b> 4. </b> "
 
 &emsp;**Vai trò trong sự kiện:** Người tham dự
 
-### [Event 3](4.3-Event3/)
+### [Event 2](4.2-Event2/)
 &emsp;**Tên sự kiện:** Agent Forge - Deepdive Day 3 (Sắp tới)
 
 &emsp;**Thời gian:** 9:00–12:00, Thứ 7, 15/08/2026
