@@ -8,8 +8,6 @@ pre: " <b> 3.3. </b> "
 
 # Nghiên cứu giảm gian lận SMS OTP với Vonage và Amazon Cognito
 
-Trong dự án Law-Chatbot, chúng em dùng **Amazon Cognito** để xác thực người dùng trước khi truy cập chatbot. Em đọc thêm bài [AWS Architecture Blog](https://aws.amazon.com/blogs/architecture/reducing-sms-otp-fraud-with-vonage-network-powered-solutions-and-amazon-cognito/) về cách kết hợp **Vonage network-powered solutions** với Cognito để giảm gian lận OTP và cải thiện trải nghiệm đăng nhập. Bài viết này ghi lại hiểu biết của em với góc nhìn sinh viên năm 4.
-
 ## Bối cảnh và bài toán
 
 Xác thực người dùng là điểm bị tấn công nhiều nhất trong ứng dụng web/mobile. Theo số liệu trong bài, chi phí tội phạm mạng toàn cầu có thể đạt **23 nghìn tỷ USD vào 2027**; **20%** gian lận liên quan danh tính giả và khai thác authentication; account takeover (ATO) tăng **141%** kể từ 2021.

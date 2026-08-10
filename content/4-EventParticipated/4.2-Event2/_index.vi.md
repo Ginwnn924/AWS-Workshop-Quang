@@ -1,125 +1,80 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-08-08
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Bài thu hoạch sự kiện "Agent Forge - Deepdive Day 2"
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+**Thời gian:** 9:00–12:00, Thứ 7, 08/08/2026
 
-### Mục Đích Của Sự Kiện
+**Địa điểm:** Tầng 26, Bitexco Financial Tower, 2 Đ. Hải Triều, Sài Gòn, Hồ Chí Minh 700000, Việt Nam
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+**Vai trò:** Người tham dự
 
-### Danh Sách Diễn Giả
+**Các diễn giả:**
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+- Nghia Tran — Agentic SA
+- Anh Pham — Cloud Consultant G-AsiaPacific Vietnam
 
-### Nội Dung Nổi Bật
+## Nội dung chính
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+Phần lý thuyết bao gồm các chủ đề sau:
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+### Memory
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+- Memory giúp Agent lưu giữ thông tin, vượt qua giới hạn context window và cá nhân hóa trải nghiệm.
+- **Short-term Memory:** lưu dữ liệu thô từ hội thoại, đồng bộ để truy xuất nhanh thông tin gần nhất.
+- **Long-term Memory:** trích xuất insight và tri thức từ hội thoại, chuyển thành vector để lưu trữ lâu dài.
+- **Memory Strategies:** gồm Summary, User Preference, Semantic và Episodic.
+- **Namespace:** tổ chức dữ liệu theo cấu trúc phân cấp như `/Strategy/Actor/Session`, giúp thu hẹp phạm vi tìm kiếm, giảm token và tăng tốc truy xuất.
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+### Evaluations
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+- Evaluations đảm bảo Agent hoạt động chính xác, hữu ích và an toàn; phát hiện hallucination, lỗi reasoning và lựa chọn tool không phù hợp.
+- Hai chế độ:
+  - **On-demand Evaluation:** đánh giá chủ động trong quá trình development.
+  - **Online Evaluation:** giám sát liên tục trong production thông qua telemetry và metrics.
+- Đánh giá ở ba cấp:
+  - **Session level** — toàn bộ phiên.
+  - **Trace level** — từng response.
+  - **Span level** — việc sử dụng tool và parameters.
+- Hệ thống dùng **Judge** phân tích hoạt động Agent, đưa kết quả vào Observability để SME theo dõi và can thiệp.
 
-#### Domain-Driven Design (DDD)
+### Observability
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+- Observability giúp developer hiểu, debug và tối ưu hoạt động bên trong Agent.
+- Ba thành phần chính:
+  - **Logs** — điều gì đã xảy ra.
+  - **Traces** — quá trình xảy ra như thế nào.
+  - **Metrics** — latency, token cost, error rate.
+- Ngoài ra: OpenTelemetry, monitoring thời gian thực, alert và phân cấp dữ liệu Session → Trace → Span/Sub-span.
 
-#### Event-Driven Architecture
+### AgentCore Components
 
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
+- **Registry:** trung tâm quản lý và tái sử dụng Agent skills, tools và APIs; hỗ trợ Admin, Publisher và Consumer.
+- **Harness:** framework tối giản khởi tạo Agent từ Model + System Prompt + Tool, hỗ trợ mở rộng.
+- **Tools:** Agent tương tác hệ thống bên ngoài, thực hiện actions và truy cập dữ liệu/API thời gian thực.
+- **Payments:** Agent thực hiện thanh toán; hiện hỗ trợ Stripe và Coinbase.
+- **Optimization:** dùng dữ liệu Evaluation và Observability để cải thiện; hỗ trợ A/B testing, Red Teaming và self-optimizing loop.
+- **Policy:** kiểm soát hành vi, bảo mật và compliance; Human-in-the-loop, Cedar, Strict/Permissive mode và Least Privilege.
 
-#### Compute Evolution
+### Phần thực hành
 
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
+Hướng dẫn triển khai với **Agent SDK**, thiết lập **AWS Bedrock**, và dùng **CLI** để tạo project, deploy và test Agent trên AWS.
 
-#### Amazon Q Developer
+## Bài học rút ra
 
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+Qua sự kiện Agent Forge - Deepdive Day 2, em hiểu rõ hơn các thành phần cần thiết để xây dựng và vận hành AI Agent trong môi trường production — đặc biệt vai trò của Memory, Evaluations và Observability trong việc duy trì ngữ cảnh, đánh giá chất lượng và giám sát hoạt động.
 
-### Những Gì Học Được
+Em cũng nắm cách các thành phần AgentCore (Registry, Harness, Tools, Policy, Optimization) phối hợp để quản lý, mở rộng, bảo mật và liên tục cải thiện Agent. Em nhận thức tầm quan trọng của Least Privilege và Human-in-the-loop khi kiểm soát hành động Agent.
 
-#### Tư Duy Thiết Kế
+Phần thực hành giúp em làm quen Agent SDK, AWS Bedrock và AWS CLI — từ khởi tạo project, triển khai đến kiểm thử Agent trên AWS.
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+## Một số hình ảnh khi tham gia sự kiện
 
-#### Kiến Trúc Kỹ Thuật
+![Tham gia Agent Forge Day 2](/images/4-Events/ev2-1.jpg)
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
-
-#### Chiến Lược Hiện Đại Hóa
-
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
-
-### Ứng Dụng Vào Công Việc
-
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
-
-### Trải nghiệm trong event
-
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp em có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
-
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, em hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
-
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp em hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
-
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
-
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, em nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
-
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
-
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp em thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+![Tham gia Agent Forge Day 2](/images/4-Events/ev2-2.jpg)

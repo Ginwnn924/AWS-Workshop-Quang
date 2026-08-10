@@ -1,126 +1,80 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-08-08
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+# Event Summary: "Agent Forge - Deepdive Day 2"
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+**Time:** 9:00 AM – 12:00 PM, Saturday, August 8, 2026
 
-### Event Objectives
+**Location:** 26th Floor, Bitexco Financial Tower, 2 Hai Trieu Street, Saigon, Ho Chi Minh City 700000, Vietnam
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+**Role:** Attendee
 
-### Speakers
+**Speakers:**
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+- Nghia Tran — Agentic SA
+- Anh Pham — Cloud Consultant G-AsiaPacific Vietnam
 
-### Key Highlights
+## Main content
 
-#### Identifying the drawbacks of legacy application architecture
+The theory session covered the following topics:
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+### Memory
 
-#### Transitioning to modern application architecture – Microservices
+- Memory helps agents retain information, go beyond context window limits, and personalize experiences.
+- **Short-term Memory:** stores raw conversation data for fast retrieval of recent context.
+- **Long-term Memory:** extracts insights and knowledge, stored as vectors for long-term use.
+- **Memory Strategies:** Summary, User Preference, Semantic, and Episodic.
+- **Namespace:** hierarchical organization (e.g. `/Strategy/Actor/Session`) to narrow search scope, reduce tokens, and speed up retrieval.
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+### Evaluations
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+- Evaluations ensure agents are accurate, useful, and safe; they detect hallucination, reasoning errors, and inappropriate tool use.
+- Two modes:
+  - **On-demand Evaluation:** proactive assessment during development.
+  - **Online Evaluation:** continuous production monitoring via telemetry and metrics.
+- Three evaluation levels:
+  - **Session level** — entire session.
+  - **Trace level** — each response.
+  - **Span level** — tool usage and parameters.
+- A **Judge** analyzes agent activity; results feed into Observability for SME review and intervention.
 
-#### Domain-Driven Design (DDD)
+### Observability
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+- Observability helps developers understand, debug, and optimize agent internals.
+- Three core components:
+  - **Logs** — what happened.
+  - **Traces** — how it happened.
+  - **Metrics** — latency, token cost, error rate.
+- Also: OpenTelemetry, real-time monitoring, alerts, and data hierarchy Session → Trace → Span/Sub-span.
 
-#### Event-Driven Architecture
+### AgentCore Components
 
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
+- **Registry:** central management and reuse of agent skills, tools, and APIs (Admin, Publisher, Consumer).
+- **Harness:** minimal framework to bootstrap agents from Model + System Prompt + Tool.
+- **Tools:** external system interaction, actions, and real-time data/API access.
+- **Payments:** agent payments; Stripe and Coinbase supported.
+- **Optimization:** uses evaluation and observability data for A/B testing, red teaming, and self-optimizing loops.
+- **Policy:** behavior, security, and compliance controls; human-in-the-loop, Cedar, strict/permissive modes, least privilege.
 
-#### Compute Evolution
+### Hands-on session
 
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
+Deployment with **Agent SDK**, **AWS Bedrock** setup, and **CLI** workflows to create projects, deploy, and test agents on AWS.
 
-#### Amazon Q Developer
+## Lessons learned
 
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+Through Agent Forge - Deepdive Day 2, I gained a clearer picture of what it takes to build and operate AI agents in production — especially the roles of Memory, Evaluations, and Observability for context, quality assessment, and monitoring.
 
-### Key Takeaways
+I also understand how AgentCore components (Registry, Harness, Tools, Policy, Optimization) work together to manage, scale, secure, and continuously improve agents. Least privilege and human-in-the-loop stood out as critical for controlling agent actions.
 
-#### Design Mindset
+The hands-on portion introduced Agent SDK, AWS Bedrock, and AWS CLI — from project setup through deployment and testing on AWS.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+## Event photos
 
-#### Technical Architecture
+![Agent Forge Day 2](/images/4-Events/ev2-1.jpg)
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
-
-#### Modernization Strategy
-
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
-
-### Applying to Work
-
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
-
-### Event Experience
-
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
-
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
-
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
-
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
-
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
-
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
-
-#### Some event photos
-*Add your event photos here*  
-
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+![Agent Forge Day 2](/images/4-Events/ev2-2.jpg)

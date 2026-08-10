@@ -8,8 +8,6 @@ pre: " <b> 3.3. </b> "
 
 # Research Notes on Reducing SMS OTP Fraud with Vonage and Amazon Cognito
 
-In the Law-Chatbot project we use **Amazon Cognito** to authenticate users before they access the chatbot. I read an [AWS Architecture Blog](https://aws.amazon.com/blogs/architecture/reducing-sms-otp-fraud-with-vonage-network-powered-solutions-and-amazon-cognito/) post on combining **Vonage network-powered solutions** with Cognito to reduce OTP fraud and improve sign-in experience. This write-up records my understanding from a fourth-year student perspective.
-
 ## Context and problem
 
 User authentication is one of the most attacked touchpoints in applications. According to figures in the article, global cybercrime costs may reach **$23 trillion by 2027**; **20%** of fraud relates to synthetic identity and authentication exploits; account takeover (ATO) rose **141%** since 2021.

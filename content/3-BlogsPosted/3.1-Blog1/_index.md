@@ -8,8 +8,6 @@ pre: " <b> 3.1. </b> "
 
 # Research Notes on Serverless Real-time Voice AI on AWS
 
-During my internship I mainly built **text** chat for the Law-Chatbot project. While reading AWS materials, I explored **voice AI** — letting users speak and hear responses in real time. This write-up captures what I learned from a serverless voice coaching pattern for field sales teams.
-
 ## Context and problem
 
 From my reading, field sales organizations need **coaching** on products, cross-sell strategies, and handling customer objections. Managers cannot join every visit. A voice-based AI coach lets reps practice anytime through a web browser.

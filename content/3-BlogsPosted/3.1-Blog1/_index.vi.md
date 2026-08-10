@@ -8,8 +8,6 @@ pre: " <b> 3.1. </b> "
 
 # Nghiên cứu Voice AI real-time serverless trên AWS
 
-Trong thời gian thực tập, chúng em chủ yếu làm chatbot **text** cho dự án Law-Chatbot. Khi đọc thêm tài liệu AWS, em tìm hiểu hướng **voice AI** — cho phép người dùng nói và nghe phản hồi theo thời gian thực. Bài viết này ghi lại những gì em học được từ một pattern triển khai voice coach cho đội sales, dùng kiến trúc serverless trên AWS.
-
 ## Bối cảnh và bài toán
 
 Theo em hiểu, doanh nghiệp bán hàng hiện trường cần được **huấn luyện** về sản phẩm, chiến lược cross-sell và cách xử lý phản đối của khách. Không phải lúc nào manager cũng đi cùng rep. Một AI coach bằng giọng nói cho phép nhân viên luyện tập bất cứ lúc nào qua trình duyệt.

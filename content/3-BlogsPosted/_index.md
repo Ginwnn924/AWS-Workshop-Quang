@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 3. </b> "
 ---
 
-During my FCAJ internship I read and took notes on several AWS blog posts about Generative AI, Amazon Bedrock AgentCore, and serverless architecture. The content below is a personal summary of what I researched and learned — not a verbatim copy of the original articles.
-
 ### [Blog 1 — Serverless real-time voice AI on AWS](3.1-Blog1/)
 
 Research notes on a voice AI pattern using AWS AppSync Events, Amazon Nova Sonic, and Bedrock AgentCore.

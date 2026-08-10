@@ -8,8 +8,6 @@ pre: " <b> 3.2. </b> "
 
 # Nghiên cứu xử lý message theo priority với Amazon MQ và AWS App Runner
 
-Trong dự án Law-Chatbot, chúng em dùng Lambda để ingestion tài liệu pháp luật và FastAPI xử lý request đồng bộ. Em đọc thêm bài [AWS Architecture Blog](https://aws.amazon.com/blogs/architecture/build-priority-based-message-processing-with-amazon-mq-and-aws-app-runner/) về cách xây hệ thống **xử lý message theo mức ưu tiên** — đơn hàng gấp, cảnh báo hệ thống, hay workflow nhiều bước cần được xử lý trước task thường. Bài viết này ghi lại những gì em hiểu với góc nhìn sinh viên năm 4.
-
 ## Bối cảnh và bài toán
 
 Theo em hiểu, nhiều hệ thống doanh nghiệp không thể xử lý mọi message theo thứ tự FIFO thuần. Ví dụ: đơn rush từ khách VIP, alert production critical, hay bước trong quy trình nghiệp vụ time-sensitive — cần **ưu tiên ngay**, trong khi task routine (báo cáo, đồng bộ dữ liệu) có thể chờ.

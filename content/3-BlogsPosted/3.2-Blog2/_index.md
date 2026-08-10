@@ -8,8 +8,6 @@ pre: " <b> 3.2. </b> "
 
 # Research Notes on Priority-Based Message Processing with Amazon MQ and AWS App Runner
 
-In the Law-Chatbot project we use Lambda for legal document ingestion and FastAPI for synchronous requests. I read an [AWS Architecture Blog](https://aws.amazon.com/blogs/architecture/build-priority-based-message-processing-with-amazon-mq-and-aws-app-runner/) post on building **priority-based message processing** — rush orders, critical alerts, and multi-step workflows need to run before routine tasks. This write-up captures what I learned from a fourth-year student perspective.
-
 ## Context and problem
 
 From my reading, many enterprise systems cannot treat every message as plain FIFO. Rush orders from key customers, production-critical alerts, or time-sensitive workflow steps need **immediate attention**, while routine tasks (reports, data sync) can wait.
