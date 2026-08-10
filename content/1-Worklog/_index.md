@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1. </b> "
 ---
 
-Throughout **8 weeks** of the **First Cloud AI Journey (FCAJ)** internship (from **22/06/2026** to **14/08/2026**), I documented my learning, research, and development of the **Vietnamese Legal Chatbot** — a RAG-based Q&A system for Vietnamese legal documents on AWS.
+
 
 **Week 1:** [Getting started with FCAJ, AWS basics, and RAG research](1.1-week1/)
 

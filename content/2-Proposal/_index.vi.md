@@ -6,7 +6,6 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 
-Tại phần này, chúng em trình bày đề xuất dự án thực tập: xây dựng **Vietnamese Legal RAG Chatbot** — hệ thống hỏi đáp văn bản pháp luật Việt Nam trên nền tảng AWS, kết hợp Retrieval-Augmented Generation (RAG) và các dịch vụ cloud-native.
 
 # Vietnamese Legal RAG Chatbot
 ## Giải pháp hỏi đáp pháp luật Việt Nam trên AWS

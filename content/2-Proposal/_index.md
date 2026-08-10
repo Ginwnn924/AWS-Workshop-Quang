@@ -6,7 +6,6 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 
-In this section, I present my internship project proposal: building a **Vietnamese Legal RAG Chatbot** — a system for querying Vietnamese legal documents on AWS, combining Retrieval-Augmented Generation (RAG) with cloud-native services.
 
 # Vietnamese Legal RAG Chatbot
 ## Vietnamese Legal Q&A Solution on AWS
