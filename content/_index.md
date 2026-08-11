@@ -25,13 +25,8 @@ chapter: false
 
 &emsp; **Internship Position:** Workforce Bootcamp - First Cloud AI Journey
 
-&emsp; **Internship Duration:** From 22/06/2026 to 14/08/2026
+&emsp; **Internship Duration:** From 22/06/2026 to 15/08/2026
 
-&emsp; **Project:** Vietnamese Legal RAG Chatbot
-
-&emsp; **Production demo:** [http://18.143.187.153:8501/](http://18.143.187.153:8501/)
-
-&emsp; **Repository:** [github.com/KhanhKoy/vietnamese-legal-llmops](https://github.com/KhanhKoy/vietnamese-legal-llmops)
 
 ![Your profile picture](/images/avatar.png)
 

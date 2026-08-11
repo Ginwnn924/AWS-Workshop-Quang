@@ -1,5 +1,5 @@
 baseURL = "https://ginwnn924.github.io/AWS-Workshop-Quang/"
-relativeURLs = false
+relativeURLs = true
 canonifyURLs = false
 defaultContentLanguage = "en"
 
