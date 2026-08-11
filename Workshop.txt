@@ -1,0 +1,433 @@
+5. Workshop
+
+5.1. Giới thiệu
+
+5.1.1. Tổng quan đề tài
+- Giới thiệu hệ thống Law-Chatbot
+- Bài toán hỏi đáp văn bản pháp luật Việt Nam
+- Lý do sử dụng kiến trúc RAG
+- Mục tiêu của hệ thống
+- Phạm vi chức năng chính:
+  + Hỏi đáp pháp luật
+  + Truy xuất nguồn tài liệu liên quan
+  + Quản lý tài liệu luật
+  + Quản lý người dùng
+  + Lưu lịch sử hội thoại
+
+5.1.2. Kiến trúc Frontend
+- Frontend chính sử dụng Streamlit
+- Các màn hình trong hệ thống:
+  + Login
+  + Register
+  + Chatbot
+  + Admin
+- Giao diện chatbot:
+  + Nhập câu hỏi
+  + Gửi request đến FastAPI
+  + Hiển thị câu trả lời
+  + Hiển thị nguồn tham khảo
+  + Quản lý session/hội thoại
+- Giao diện admin:
+  + Quản lý người dùng
+  + Quản lý tài liệu
+  + Theo dõi thông tin hệ thống
+
+5.1.3. Kiến trúc Backend
+- Backend sử dụng FastAPI
+- API chính phục vụ hỏi đáp: `/ask`
+- Các nhóm module backend:
+  + `src/api`: API, schema, route, auth
+  + `src/rag_core`: xử lý RAG
+  + `src/services`: ingestion, chat history, Cognito admin
+  + `src/storage`: lưu trữ dữ liệu app
+  + `src/monitoring`: logging và feedback
+- Luồng xử lý backend:
+  + Nhận câu hỏi từ Streamlit
+  + Tạo embedding câu hỏi
+  + Truy vấn RDS PostgreSQL pgvector
+  + Tạo prompt
+  + Gọi LLM
+  + Trả câu trả lời và nguồn tham khảo về frontend
+
+5.1.4. Kiến trúc tổng thể trên AWS
+- EC2 chạy Docker Compose
+- Container FastAPI chạy port 8000
+- Container Streamlit chạy port 8501
+- Streamlit gọi FastAPI qua Docker network
+- RDS PostgreSQL pgvector lưu vector văn bản luật
+- Bedrock dùng cho embedding/LLM khi bật cấu hình cloud
+- S3 lưu tài liệu pháp luật và manifest
+- SQS nhận event ingestion từ S3
+- Lambda xử lý tài liệu mới
+- DynamoDB lưu lịch sử hội thoại
+- Cognito phục vụ xác thực/phân quyền cho API quản trị
+- CloudFormation tạo các tài nguyên nền
+
+5.1.5. Các dịch vụ AWS được sử dụng
+- Amazon EC2
+- Application Load Balancer
+- Amazon VPC, Subnet, Security Group
+- Amazon S3
+- Amazon SQS và DLQ
+- AWS Lambda
+- Amazon Bedrock
+- Amazon RDS PostgreSQL + pgvector
+- Amazon DynamoDB
+- Amazon Cognito
+- AWS CloudFormation
+- IAM/IAM Role
+- CloudWatch/SNS ở mức định hướng giám sát và cảnh báo
+
+5.1.6. Đặc tả chức năng hệ thống
+- Đăng ký/đăng nhập người dùng
+- Hỏi đáp pháp luật bằng RAG
+- Hiển thị nguồn tài liệu liên quan
+- Quản lý session/hội thoại
+- Quản lý tài liệu luật
+- Upload tài liệu lên S3
+- Tự động xử lý tài liệu bằng Lambda
+- Lưu lịch sử chat
+- Phân quyền người dùng/admin
+
+
+5.2. Chuẩn bị
+
+5.2.1. Chuẩn bị source code
+- Clone source code
+- Kiểm tra cấu trúc thư mục
+- Tạo virtual environment
+- Cài đặt dependencies
+- Chuẩn bị file `.env` từ `.env.sample`
+
+5.2.2. Chuẩn bị dữ liệu
+- Chuẩn bị dữ liệu pháp luật
+- Chuẩn bị file PDF/TXT demo
+- Cấu hình đường dẫn dữ liệu local hoặc S3
+- Kiểm tra dữ liệu đầu vào trước khi build index
+
+5.2.3. Chuẩn bị tài khoản AWS
+- Chọn region triển khai
+- Kiểm tra quyền sử dụng các dịch vụ:
+  + EC2
+  + S3
+  + SQS
+  + Lambda
+  + Bedrock
+  + RDS
+  + DynamoDB
+  + Cognito
+  + CloudFormation
+
+5.2.4. Chuẩn bị IAM User/IAM Role
+- Tạo IAM User khi chạy local
+- Cấu hình AWS credentials
+- Ưu tiên IAM Role khi chạy trên EC2/Lambda
+- Cấp quyền tối thiểu cho các dịch vụ cần dùng
+
+5.2.5. Chuẩn bị RDS PostgreSQL
+- Tạo Amazon RDS PostgreSQL
+- Cấu hình security group
+- Cấu hình kết nối database trong `.env`
+- Bật extension pgvector
+- Chuẩn bị bảng lưu chunk và vector
+
+5.2.6. Chuẩn bị môi trường EC2/Docker
+- Tạo EC2 instance
+- Cài Docker và Docker Compose
+- Clone project lên EC2
+- Tạo file `.env` production
+- Kiểm tra EC2 kết nối được RDS và Bedrock
+
+
+5.3. Triển khai Frontend
+
+5.3.1. Triển khai Streamlit UI
+- Mô tả file `streamlit_app.py`
+- Cấu hình page layout
+- Import các view giao diện
+- Khởi tạo database app
+- Khởi tạo session state
+- Điều hướng màn hình theo trạng thái đăng nhập
+
+5.3.2. Triển khai Login/Register
+- Mô tả `views/login.py`
+- Mô tả `views/register.py`
+- Kiểm tra đăng nhập
+- Kiểm tra đăng ký
+- Lưu thông tin user vào storage backend
+
+5.3.3. Triển khai Chatbot View
+- Mô tả `views/chatbot.py`
+- Nhập câu hỏi từ người dùng
+- Gửi câu hỏi đến FastAPI `/ask`
+- Nhận câu trả lời từ backend
+- Hiển thị nguồn tham khảo
+- Quản lý session hội thoại
+
+5.3.4. Triển khai Admin View
+- Mô tả `views/admin.py`
+- Quản lý thông tin người dùng
+- Quản lý tài liệu
+- Hiển thị trạng thái hệ thống
+- Tích hợp các thao tác admin liên quan đến tài liệu/chatbot
+
+5.3.5. Kết nối Frontend với Backend
+- Cấu hình `API_URL=http://api:8000/ask`
+- Streamlit gửi request đến FastAPI
+- FastAPI trả answer và sources
+- Frontend render câu trả lời và danh sách nguồn
+
+5.3.6. Đóng gói Frontend bằng Docker
+- Container `streamlit`
+- Port 8501
+- Cấu hình trong `deploy/docker-compose.yml`
+- Chạy cùng container `api`
+
+
+5.4. Triển khai Backend
+
+5.4.1. Triển khai FastAPI API
+- Mô tả `src/api/main.py`
+- Endpoint `/ask`
+- Request gồm question và top_k
+- Response gồm answer và sources
+- Khởi tạo QAService khi API start
+
+5.4.2. Triển khai RAG Core
+- `dataset_reader.py`: đọc dữ liệu pháp luật
+- `chunking.py`: chia văn bản thành chunk
+- `embeddings.py`: tạo vector embedding
+- `vector_store.py`: lưu và tìm kiếm vector
+- `retriever.py`: truy xuất chunk liên quan
+- `prompt.py`: tạo prompt
+- `generator.py`: gọi LLM
+- `qa_service.py`: điều phối toàn bộ luồng hỏi đáp
+
+5.4.3. Triển khai Amazon RDS PostgreSQL + pgvector
+- Cấu hình `USE_PGVECTOR=true`
+- Cấu hình `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`
+- Tạo extension `vector`
+- Tạo bảng `legal_chunks`
+- Lưu chunk và embedding vào RDS
+- Tìm kiếm similarity bằng pgvector
+- Cấu hình timeout truy vấn
+- Ghi chú: HNSW/IVFFlat chỉ là tối ưu tùy chọn, không bắt buộc
+
+5.4.4. Triển khai Amazon Bedrock
+- Cấu hình `LLM_PROVIDER=bedrock`
+- Cấu hình `BEDROCK_LLM_MODEL_ID`
+- Cấu hình `USE_BEDROCK_EMBEDDING`
+- Cấu hình `BEDROCK_EMBEDDING_MODEL`
+- Gọi Bedrock Runtime để tạo embedding
+- Gọi Bedrock Runtime để sinh câu trả lời
+- Fallback sang local/Gemini khi chạy dev nếu cần
+
+5.4.5. Triển khai Amazon S3
+- Tạo bucket lưu tài liệu pháp luật
+- Cấu hình `LEGAL_DOCUMENTS_BUCKET`
+- Tạo presigned upload cho admin
+- Lưu tài liệu vào `incoming/files`
+- Lưu manifest vào `incoming/manifests`
+- Sử dụng `scripts/sync_to_s3.py` nếu cần đồng bộ artefacts
+
+5.4.6. Triển khai Amazon SQS và DLQ
+- Tạo SQS ingestion queue
+- Tạo Dead Letter Queue
+- S3 gửi event khi có file mới
+- SQS chuyển message cho Lambda
+- DLQ lưu các message xử lý thất bại
+
+5.4.7. Triển khai AWS Lambda Ingestion
+- Mô tả `src/rag_core/lambda_handler.py`
+- Lambda nhận S3/SQS event
+- Đọc file PDF/TXT từ S3
+- Đọc manifest tương ứng
+- Chunking tài liệu
+- Tạo embedding
+- Lưu vào RDS pgvector
+- Hỗ trợ partial batch failure
+
+5.4.8. Triển khai DynamoDB Chat History
+- Mô tả `src/services/chat_history.py`
+- Tạo bảng `LegalChatbotHistory`
+- Lưu conversation metadata
+- Lưu message user/assistant
+- GSI theo user
+- GSI theo ngày cho admin
+- TTL cho dữ liệu hội thoại
+
+5.4.9. Triển khai Cognito Auth & RBAC
+- Mô tả `src/api/auth.py`
+- Xác thực JWT từ Cognito
+- Tạo nhóm quyền:
+  + users
+  + editors
+  + admins
+- Mô tả `src/services/cognito_admin.py`
+- Admin có thể:
+  + List users
+  + Enable user
+  + Disable user
+  + Add user to group
+- Ghi chú: đường `/ask` dùng cho Streamlit hiện có thể chạy không cần Cognito trong dev, Cognito dùng cho API/app quản trị và production
+
+5.4.10. Triển khai CloudFormation Foundation
+- Mô tả `infra/foundation.yaml`
+- Tạo DynamoDB table
+- Tạo SQS queue
+- Tạo DLQ
+- Tạo S3 bucket
+- Tạo Cognito User Pool
+- Tạo Cognito App Client
+- Tạo Cognito groups
+- Lấy output để cấu hình `.env`
+
+5.4.11. Triển khai Docker trên EC2
+- Mô tả `deploy/Dockerfile`
+- Mô tả `deploy/docker-compose.yml`
+- Container `api`
+- Container `streamlit`
+- FastAPI chạy port 8000
+- Streamlit chạy port 8501
+- Streamlit gọi API qua Docker network
+- EC2 kết nối RDS và Bedrock
+
+
+5.5. Kiểm thử hệ thống
+
+5.5.1. Kiểm thử Frontend
+- Kiểm thử màn hình login
+- Kiểm thử màn hình register
+- Kiểm thử màn hình chatbot
+- Kiểm thử màn hình admin
+- Kiểm thử session state
+- Kiểm thử hiển thị câu trả lời và nguồn tham khảo
+
+5.5.2. Kiểm thử FastAPI
+- Kiểm thử endpoint `/`
+- Kiểm thử endpoint `/ask`
+- Kiểm thử request question/top_k
+- Kiểm thử response answer/sources
+- Kiểm thử lỗi khi QAService chưa sẵn sàng
+
+5.5.3. Kiểm thử RAG Pipeline
+- Kiểm thử đọc dữ liệu
+- Kiểm thử chunking
+- Kiểm thử embedding
+- Kiểm thử retrieval
+- Kiểm thử prompt
+- Kiểm thử generation
+- Kiểm thử câu trả lời cuối cùng
+
+5.5.4. Kiểm thử RDS pgvector
+- Kiểm tra kết nối database
+- Kiểm tra bảng `legal_chunks`
+- Kiểm tra insert embedding
+- Kiểm tra similarity search
+- Kiểm tra timeout
+- Kiểm tra fallback exact search khi không dùng HNSW
+
+5.5.5. Kiểm thử S3/SQS/Lambda Ingestion
+- Upload file PDF/TXT lên S3
+- Kiểm tra manifest
+- Kiểm tra SQS nhận event
+- Kiểm tra Lambda xử lý file
+- Kiểm tra chunk/embedding được lưu vào RDS
+- Kiểm tra retry và DLQ khi lỗi
+
+5.5.6. Kiểm thử Bedrock
+- Kiểm tra gọi Bedrock embedding
+- Kiểm tra gọi Bedrock LLM
+- Kiểm tra timeout
+- Kiểm tra cấu hình model id
+- So sánh với provider dev nếu cần
+
+5.5.7. Kiểm thử DynamoDB Chat History
+- Tạo conversation
+- Lưu message
+- Lấy danh sách conversation
+- Lấy message theo conversation
+- Xóa conversation
+- Kiểm tra TTL
+
+5.5.8. Kiểm thử Cognito/RBAC
+- Kiểm tra xác thực token
+- Kiểm tra user thuộc nhóm users
+- Kiểm tra user thuộc nhóm editors
+- Kiểm tra user thuộc nhóm admins
+- Kiểm tra API bị chặn khi không đủ quyền
+- Kiểm tra admin service quản lý user
+
+5.5.9. Kiểm thử Docker/EC2
+- Build Docker image
+- Chạy Docker Compose
+- Kiểm tra container api
+- Kiểm tra container streamlit
+- Kiểm tra log container
+- Truy cập Streamlit trên port 8501
+- Kiểm tra Streamlit gọi được FastAPI
+- Kiểm tra EC2 kết nối RDS/Bedrock
+
+5.5.10. Kiểm thử hiệu năng
+- Kiểm tra latency trả lời
+- Kiểm tra thời gian embedding
+- Kiểm tra thời gian DB search
+- Kiểm tra thời gian LLM
+- Chạy benchmark bằng `scripts/benchmark_qa.py`
+- Ghi nhận p50, p95, max nếu có môi trường test phù hợp
+
+
+5.6. Tổng kết
+
+5.6.1. Kết quả đạt được
+- Xây dựng được chatbot hỏi đáp pháp luật theo kiến trúc RAG
+- Hoàn thiện frontend chính bằng Streamlit
+- Hoàn thiện backend FastAPI
+- Tích hợp RDS PostgreSQL pgvector cho vector search
+- Tích hợp Bedrock cho embedding/LLM theo cấu hình cloud
+- Có luồng upload và ingestion tài liệu qua S3/SQS/Lambda
+- Có lưu lịch sử hội thoại bằng DynamoDB
+- Có xác thực/phân quyền bằng Cognito cho API quản trị
+- Có CloudFormation template cho tài nguyên nền
+- Có Docker Compose deploy trên EC2
+
+5.6.2. Hạn chế hiện tại
+- Một số tài nguyên AWS ở mức code/template, cần deploy thật để kiểm chứng đầy đủ
+- Cognito chưa phải luồng bắt buộc cho endpoint Streamlit `/ask` trong dev
+- CloudWatch/SNS mới ở mức định hướng giám sát vận hành
+- Admin frontend còn có thể mở rộng thêm
+- Cần benchmark thêm trên môi trường AWS thật
+
+5.6.3. Chi phí và dọn dẹp tài nguyên
+- Theo dõi chi phí EC2, RDS, Bedrock, S3, Lambda
+- Dừng EC2 khi không sử dụng
+- Xóa file test trong S3
+- Xóa queue/table/test stack nếu không còn dùng
+- Dọn tài nguyên để tránh phát sinh chi phí
+
+5.6.4. Hướng phát triển tiếp theo
+- Deploy đầy đủ CloudFormation stack
+- Hoàn thiện Lambda ingestion trên AWS thật
+- Bật Cognito đầy đủ cho production
+- Bổ sung CloudWatch logs/alarms và SNS notification
+- Chuyển secret sang Secrets Manager
+- Cân nhắc RDS Proxy nếu nhiều kết nối
+- Bổ sung HTTPS/domain/WAF khi public production
+- Tối ưu thêm chất lượng retrieval và latency
+
+5.6.5. Tài liệu tham khảo
+- README.md
+- docs/IMPLEMENTATION_PLAN.md
+- deploy/README.md
+- infra/foundation.yaml
+- AWS documentation:
+  + Amazon EC2
+  + Amazon S3
+  + Amazon SQS
+  + AWS Lambda
+  + Amazon Bedrock
+  + Amazon RDS PostgreSQL
+  + pgvector
+  + Amazon DynamoDB
+  + Amazon Cognito
+  + AWS CloudFormation

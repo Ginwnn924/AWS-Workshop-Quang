@@ -8,67 +8,95 @@ pre: " <b> 5.2. </b> "
 
 # Prerequisites — Các bước chuẩn bị
 
-Trước khi setup các dịch vụ AWS ở các mục sau, cần chuẩn bị môi trường và quyền truy cập tối thiểu như dưới đây.
+Trong phạm vi hiện tại, phần chuẩn bị chỉ dừng ở **5.2.1** và **5.2.2**, bám vào các thành phần có thật trong repo `vietnamese-legal-llmops`.
 
-## 1. Tài khoản và region
+## 5.2.1. Chuẩn bị source code
 
-- Tài khoản AWS đang hoạt động
-- Region khuyến nghị: **ap-southeast-1**
-- Bật MFA cho IAM user / root nếu chưa bật
-- Theo dõi chi phí bằng AWS Budgets khi thực hành lab
+- Clone source code về máy local
+- Kiểm tra các thư mục chính: `src/`, `views/`, `scripts/`, `deploy/`
+- Tạo virtual environment
+- Cài dependencies từ `requirements.txt`
+- Tạo file `.env` từ `.env.sample`
 
-## 2. Máy chủ EC2
-
-- Instance type demo: **t3a.small**
-- Hệ điều hành: Amazon Linux hoặc Ubuntu
-- Ổ đĩa đủ chỗ cài Docker image
-- Subnet có thể kết nối tới RDS và Bedrock, hoặc có egress Internet khi cần
-
-## 3. Công cụ trên EC2
-
-Cài đặt và kiểm tra:
-
-sudo yum install -y docker git
-# hoặc apt tương đương trên Ubuntu
-sudo systemctl enable --now docker
-sudo usermod -aG docker $USER
-# đăng nhập lại session sau khi thêm group docker
-docker --version
-git --version
-
-## 4. Clone codebase
-
+```bash
 git clone <your-repo-url> vietnamese-legal-llmops
 cd vietnamese-legal-llmops
 cp .env.sample .env
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
 
 {{% notice warning %}}
-Không commit file .env chứa mật khẩu RDS, API key hoặc Access Key vào Git.
+Không commit file `.env` vì `.env.sample` hiện có các biến nhạy cảm như `PGPASSWORD`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `GEMINI_API_KEY`.
 {{% /notice %}}
 
-## 5. Security Group
+**Những file nên đọc trước khi chạy repo:**
 
-| Hướng | Port | Ghi chú |
+| File | Vai trò |
+| --- | --- |
+| `README.md` | Mô tả tổng quan project và cách chạy |
+| `.env.sample` | Mẫu cấu hình môi trường |
+| `streamlit_app.py` | Entry chính của Streamlit |
+| `app.py` | Entry của Chainlit |
+| `src/api/main.py` | API mỏng cho `POST /ask` |
+| `scripts/build_index.py` | Script build dữ liệu vector |
+| `deploy/docker-compose.yml` | Cách chạy bằng Docker Compose |
+
+**Các nhóm biến môi trường đáng chú ý trong `.env.sample`:**
+
+| Nhóm | Biến chính |
+| --- | --- |
+| Dataset | `HF_DATASET_NAME`, `LOCAL_DEMO_PATH` |
+| Chunking | `CHUNK_SIZE_CHARS`, `CHUNK_OVERLAP_CHARS` |
+| Embedding | `EMBEDDING_MODEL_NAME`, `EMBEDDING_BATCH_SIZE`, `USE_BEDROCK_EMBEDDING` |
+| LLM | `LLM_PROVIDER`, `GEMINI_API_KEY`, `BEDROCK_LLM_MODEL_ID` |
+| Database | `USE_PGVECTOR`, `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD` |
+| API | `AUTH_DISABLED`, `ENABLE_API_DOCS`, `CORS_ALLOWED_ORIGINS` |
+
+## 5.2.2. Chuẩn bị dữ liệu
+
+- Repo hiện có một file demo trong `data_demo/`: `44_VBHN-VPQH_699655.pdf`
+- Ngoài dữ liệu local, `src/rag_core/dataset_reader.py` còn hỗ trợ đọc từ Hugging Face dataset qua biến `HF_DATASET_NAME`
+- Trước khi build index, cần xác định rõ đang dùng dữ liệu local hay dữ liệu từ Hugging Face
+
+**Nguồn dữ liệu theo codebase:**
+
+| Nguồn | Dấu vết trong repo | Ghi chú |
 | --- | --- | --- |
-| Inbound EC2 | **8501** | Streamlit UI — chỉ mở từ IP của bạn hoặc ALB |
-| Inbound EC2 | **8000** | FastAPI — tùy chọn, thường chỉ nội bộ Docker |
-| Inbound RDS | **5432** | Chỉ nhận từ Security Group của EC2 |
+| Hugging Face dataset | `HF_DATASET_NAME` trong `.env.sample`, `dataset_reader.py` | Là đường đọc dữ liệu mặc định |
+| File demo local | `data_demo/44_VBHN-VPQH_699655.pdf` | Dùng để kiểm tra nhanh hoặc demo |
 
-## 6. IAM và LLM
+`dataset_reader.py` hiện đọc các trường như:
 
-- Ưu tiên **IAM Instance Role** cho EC2 để gọi Bedrock / S3
-- Tránh gắn Access Key dài hạn trên máy nếu có thể dùng role
-- Chọn một trong hai hướng LLM:
-  - **Bedrock** — bật model access trong region
-  - **Gemini** — có GEMINI_API_KEY trong .env cho môi trường dev
+- `id`
+- `title`
+- `so_ky_hieu`
+- `loai_van_ban`
+- `co_quan_ban_hanh`
+- `linh_vuc`
+- `tinh_trang_hieu_luc`
+- `content_markdown`
 
-## 7. Checklist trước mục 5.3
+Sau khi đọc dữ liệu, pipeline sẽ:
 
-- [ ] Đăng nhập AWS Console / CLI được
-- [ ] EC2 sẵn sàng, SSH hoặc Session Manager được
-- [ ] Docker và Git chạy được trên EC2
-- [ ] Repo vietnamese-legal-llmops đã clone, có file .env
-- [ ] Security Group và IAM/role đã cấu hình tối thiểu
-- [ ] Đã chọn Bedrock hoặc Gemini
+1. Chuẩn hóa metadata
+2. Chia văn bản thành các chunk
+3. Tạo embedding theo batch
+4. Ghi vào vector store để phục vụ truy vấn
 
-Sang mục tiếp theo: tạo **S3 bucket** và upload data.
+{{< mermaid >}}
+graph LR;
+    A["HF dataset / PDF demo"] --> B["dataset_reader.py"]
+    B --> C["chunking.py"]
+    C --> D["embeddings.py"]
+    D --> E["vector_store.py"]
+{{< /mermaid >}}
+
+**Checklist tối thiểu trước khi sang bước tiếp theo:**
+
+- [ ] Đã clone repo và cài dependencies
+- [ ] Đã tạo `.env` từ `.env.sample`
+- [ ] Đã chọn nguồn dữ liệu: Hugging Face hoặc `data_demo/`
+- [ ] Đã hiểu các biến `HF_DATASET_NAME`, `LOCAL_DEMO_PATH`, `CHUNK_SIZE_CHARS`
+- [ ] Đã xác định cách chạy: Streamlit, Chainlit hoặc FastAPI
