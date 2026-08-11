@@ -10,7 +10,7 @@ pre: " <b> 1.5. </b> "
 
 * Thực hành lab RDS, CloudFormation và CloudWatch.
 * Chuyển vector store sang RDS PostgreSQL pgvector.
-* Hoàn thành Worklog tuần 1 và Event 1.
+* Hoàn thành Worklog tuần 1.
 
 ### Các công việc triển khai trong tuần
 
@@ -20,7 +20,7 @@ pre: " <b> 1.5. </b> "
 | Thứ 3 | - Làm quen SageMaker Studio; xử lý lỗi Service Quotas khi tạo resource <br> - Tìm hiểu embedding model trên Bedrock cho giai đoạn migrate | 21/07/2026 | 21/07/2026 | [Cloud Journey](https://cloudjourney.awsstudygroup.com/) <br> [Amazon Bedrock Baseline Architecture](https://aws.amazon.com/vi/blogs/architecture/amazon-bedrock-baseline-architecture-in-an-aws-landing-zone/) |
 | Thứ 4 | - Phân tích dataset pháp luật: lọc trùng, chuẩn hóa metadata điều/khoản <br> - Migrate vector store từ SQLite local sang RDS pgvector; chạy lại build index | 22/07/2026 | 22/07/2026 | Source code `vector_store/`, [Amazon RDS](https://000005.awsstudygroup.com/vi/) |
 | Thứ 5 | - Tạo bảng `legal_chunks` với cột embedding vector(1536) <br> - Tối ưu cosine search; cấu hình connection pool và timeout | 23/07/2026 | 23/07/2026 | pgvector docs, `retriever.py` |
-| Thứ 6 | - Hoàn thành Worklog tuần 1 và Event 1 theo template FCAJ <br> - Rà soát nội dung báo cáo, chỉnh sửa lỗi chính tả và format Hugo | 24/07/2026 | 24/07/2026 | [FCAJ Kick off](https://www.youtube.com/watch?v=AQlsd0nWdZk&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=1) |
+| Thứ 6 | - Hoàn thành Worklog tuần 1<br> - Rà soát nội dung báo cáo, chỉnh sửa lỗi chính tả và format Hugo | 24/07/2026 | 24/07/2026 | [FCAJ Kick off](https://www.youtube.com/watch?v=AQlsd0nWdZk&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=1) |
 
 ### Kết quả đạt được tuần 5
 

@@ -8,10 +8,10 @@ pre: " <b> 1.8. </b> "
 
 ### Mục tiêu tuần 8
 
-* Hoàn thiện deploy Docker trên EC2 và tích hợp API Gateway.
+* Hoàn thành deploy Docker trên EC2 và tích hợp API Gateway.
 * Kiểm thử, rà soát bảo mật và benchmark hiệu năng.
-* Hoàn thiện báo cáo thực tập và demo cuối kỳ.
-
+* Hoàn thành báo cáo thực tập và demo cuối kỳ.
+* Hoàn thành bài thu hoạch Event 2
 ### Các công việc triển khai trong tuần
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
