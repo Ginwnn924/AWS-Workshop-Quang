@@ -116,7 +116,7 @@ Mã nguồn gồm `src/rag_core/`, `src/api/`, `infra/foundation.yaml`, `deploy/
 
 | Hạng mục | Chi phí ước tính/tháng |
 | --- | --- |
-| EC2 t3.medium (1 instance) | ~30 USD |
+| EC2 t3a.small | ~14 USD |
 | RDS db.t3.micro PostgreSQL | ~15 USD |
 | Amazon Bedrock (embed + LLM, ~10K query) | ~5–20 USD |
 | S3 Standard (~10 GB) | ~0.25 USD |
@@ -124,7 +124,7 @@ Mã nguồn gồm `src/rag_core/`, `src/api/`, `infra/foundation.yaml`, `deploy/
 | Lambda + SQS | ~1 USD |
 | Cognito | Free tier (< 50K MAU) |
 | CloudWatch + SNS | ~2 USD |
-| **Tổng ước tính** | **~55–70 USD/tháng** |
+| **Tổng ước tính** | **~40–55 USD/tháng** |
 
 *Ghi chú:* Chi phí production với ALB, 2 EC2, RDS Multi-AZ sẽ cao hơn. Có thể giảm bằng ECS Fargate Spot, RDS Reserved Instance, hoặc tắt instance ngoài giờ lab.
 

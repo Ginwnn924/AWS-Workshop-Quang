@@ -116,7 +116,7 @@ Source code includes `src/rag_core/`, `src/api/`, `infra/foundation.yaml`, `depl
 
 | Item | Estimated cost/month |
 | --- | --- |
-| EC2 t3.medium (1 instance) | ~$30 USD |
+| EC2 t3a.small | ~$14 USD |
 | RDS db.t3.micro PostgreSQL | ~$15 USD |
 | Amazon Bedrock (embed + LLM, ~10K queries) | ~$5–20 USD |
 | S3 Standard (~10 GB) | ~$0.25 USD |
@@ -124,7 +124,7 @@ Source code includes `src/rag_core/`, `src/api/`, `infra/foundation.yaml`, `depl
 | Lambda + SQS | ~$1 USD |
 | Cognito | Free tier (< 50K MAU) |
 | CloudWatch + SNS | ~$2 USD |
-| **Total estimate** | **~$55–70 USD/month** |
+| **Total estimate** | **~$40–55 USD/month** |
 
 *Note:* Production costs with ALB, 2 EC2 instances, RDS Multi-AZ will be higher. Can be reduced with ECS Fargate Spot, RDS Reserved Instance, or shutting down instances outside lab hours.
 
