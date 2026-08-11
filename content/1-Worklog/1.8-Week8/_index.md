@@ -10,7 +10,8 @@ pre: " <b> 1.8. </b> "
 
 * Complete Docker deployment on EC2 and API Gateway integration.
 * Test, review security, and benchmark performance.
-* Finalize internship report and end-of-term demo.
+* Complete internship report and end-of-term demo.
+* Complete Event 2
 
 ### Tasks carried out this week
 
