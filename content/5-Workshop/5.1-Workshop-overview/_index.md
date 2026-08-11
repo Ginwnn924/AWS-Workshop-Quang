@@ -21,6 +21,82 @@ Looking up Vietnamese legal documents currently faces significant challenges: la
 
 The system uses **serverless ingestion** combined with **containerized application** on AWS in the `ap-southeast-1` Region. Legal documents are uploaded via S3, processed asynchronously through SQS and Lambda; the application runs on EC2 with Docker Compose; vector data resides on private RDS PostgreSQL.
 
+### Overall Architecture Diagram
+
+{{< mermaid >}}
+graph TB
+    subgraph "User Layer"
+        U["User"]
+    end
+
+    subgraph "Application Layer (EC2)"
+        ST["Streamlit :8501"]
+        CL["Chainlit"]
+        API["FastAPI :8000"]
+    end
+
+    subgraph "RAG Pipeline"
+        EMB["Embedding Service"]
+        RET["Vector Search"]
+        REK["Reranker"]
+        GEN["LLM Generator"]
+    end
+
+    subgraph "AWS Services"
+        RDS[("RDS PostgreSQL<br/>+ pgvector")]
+        S3["S3 Documents"]
+        SQS["SQS Queue"]
+        LAM["Lambda"]
+        BED["Bedrock"]
+        COG["Cognito"]
+        DDB["DynamoDB"]
+    end
+
+    U --> ST
+    U --> CL
+    ST --> API
+    CL --> API
+    API --> EMB
+    EMB --> RET
+    RET --> RDS
+    RET --> REK
+    REK --> GEN
+    GEN --> BED
+
+    API --> COG
+    API --> DDB
+
+    S3 --> SQS
+    SQS --> LAM
+    LAM --> RDS
+{{< /mermaid >}}
+
+### Query Processing Flow
+
+{{< mermaid >}}
+sequenceDiagram
+    participant U as User
+    participant FE as Streamlit
+    participant BE as FastAPI
+    participant E as Embedding
+    participant DB as pgvector (RDS)
+    participant R as Reranker
+    participant L as LLM (Gemini/Bedrock)
+
+    U->>FE: Ask legal question
+    FE->>BE: POST /ask
+    BE->>E: Embed query
+    E-->>BE: Vector (768d)
+    BE->>DB: Cosine similarity search
+    DB-->>BE: Top-K chunks
+    BE->>R: Rerank chunks
+    R-->>BE: Top-N relevant
+    BE->>L: Prompt + Context
+    L-->>BE: Generated answer
+    BE-->>FE: Answer + Sources + Timings
+    FE-->>U: Display result
+{{< /mermaid >}}
+
 ### Five Architecture Layers
 
 | Layer | Components | Primary Role |

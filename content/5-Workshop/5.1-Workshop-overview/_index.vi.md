@@ -33,19 +33,81 @@ Vietnamese Legal RAG Chatbot sử dụng kiến trúc **serverless ingestion** k
 | Application | FastAPI, Streamlit, Chainlit, Docker Compose, EC2 | Cung cấp API endpoint, giao diện chat và admin dashboard. |
 | Auth & Session | Amazon Cognito (JWT + RBAC), Amazon DynamoDB (chat history) | Xác thực người dùng theo nhóm quyền, lưu trữ lịch sử hội thoại với TTL. |
 
+### Sơ đồ kiến trúc tổng thể
+
+{{< mermaid >}}
+graph TB
+    subgraph "User Layer"
+        U["Người dùng"]
+    end
+
+    subgraph "Application Layer (EC2)"
+        ST["Streamlit :8501"]
+        CL["Chainlit"]
+        API["FastAPI :8000"]
+    end
+
+    subgraph "RAG Pipeline"
+        EMB["Embedding Service"]
+        RET["Vector Search"]
+        REK["Reranker"]
+        GEN["LLM Generator"]
+    end
+
+    subgraph "AWS Services"
+        RDS[("RDS PostgreSQL<br/>+ pgvector")]
+        S3["S3 Documents"]
+        SQS["SQS Queue"]
+        LAM["Lambda"]
+        BED["Bedrock"]
+        COG["Cognito"]
+        DDB["DynamoDB"]
+    end
+
+    U --> ST
+    U --> CL
+    ST --> API
+    CL --> API
+    API --> EMB
+    EMB --> RET
+    RET --> RDS
+    RET --> REK
+    REK --> GEN
+    GEN --> BED
+
+    API --> COG
+    API --> DDB
+
+    S3 --> SQS
+    SQS --> LAM
+    LAM --> RDS
+{{< /mermaid >}}
+
 ### Luồng xử lý chính
 
-```text
-User → Streamlit/Chainlit UI → FastAPI Backend
-     → Embed Query (SentenceTransformer)
-     → pgvector Cosine Search (RDS PostgreSQL)
-     → Cross-encoder Rerank
-     → LLM Generation (Gemini / Bedrock)
-     → Response with Legal Citations
+{{< mermaid >}}
+sequenceDiagram
+    participant U as User
+    participant FE as Streamlit
+    participant BE as FastAPI
+    participant E as Embedding
+    participant DB as pgvector (RDS)
+    participant R as Reranker
+    participant L as LLM (Gemini/Bedrock)
 
-Document Upload → S3 → SQS → Lambda
-              → Chunk + Embed → pgvector Store
-```
+    U->>FE: Nhập câu hỏi pháp luật
+    FE->>BE: POST /ask
+    BE->>E: Embed câu hỏi
+    E-->>BE: Vector (768d)
+    BE->>DB: Cosine similarity search
+    DB-->>BE: Top-K chunks
+    BE->>R: Rerank chunks
+    R-->>BE: Top-N relevant
+    BE->>L: Prompt + Context
+    L-->>BE: Generated answer
+    BE-->>FE: Answer + Sources + Timings
+    FE-->>U: Hiển thị kết quả
+{{< /mermaid >}}
 
 ## Tech stack
 
@@ -128,6 +190,100 @@ Offline Eval → Recall@k, MRR → Model/Config Tuning
 | CloudWatch | Thu thập application logs, container metrics và hỗ trợ truy vấn Log Insights. |
 | Bedrock | Dịch vụ LLM managed (Claude 3, Llama 3, Titan Embeddings) không cần quản lý GPU infrastructure. |
 | EC2 | Host ứng dụng Docker Compose (FastAPI + Streamlit) trong quá trình phát triển và demo. |
+
+## Kiến trúc Backend (5.1.2)
+
+### Cấu trúc mã nguồn Backend
+
+```text
+src/
+├── api/
+│   ├── main.py          # FastAPI app đơn giản (POST /ask, không auth)
+│   ├── app.py           # FastAPI app đầy đủ (CORS, Cognito JWT, /api/*)
+│   ├── routes.py        # /api/chat, /api/conversations, /api/admin/*
+│   ├── auth.py          # Cognito JWT verification & RBAC
+│   └── schemas.py       # Pydantic request/response models
+│
+├── rag_core/            # Core RAG pipeline
+│   ├── config.py        # Settings từ .env + YAML
+│   ├── dataset_reader.py# Đọc HuggingFace datasets / local parquet
+│   ├── chunking.py      # Overlapping character-based text chunking
+│   ├── embeddings.py    # SentenceTransformer hoặc Bedrock Titan
+│   ├── vector_store.py  # pgvector storage & cosine search
+│   ├── retriever.py     # Retrieval orchestration
+│   ├── reranker.py      # Cross-encoder reranking
+│   ├── qa_service.py    # End-to-end ask() pipeline
+│   ├── generator.py     # LLM generation (Gemini hoặc Bedrock)
+│   ├── prompt.py        # Prompt template construction
+│   └── lambda_handler.py# AWS Lambda ingestion handler
+│
+├── services/
+│   ├── chat_history.py  # DynamoDB conversation store
+│   ├── cognito_admin.py # Cognito user management
+│   ├── document_admin.py# Document CRUD (soft delete)
+│   └── ingestion.py     # S3 presigned upload + manifest
+│
+├── storage/
+│   ├── postgres_store.py# PostgreSQL app tables
+│   └── sqlite_store.py  # SQLite fallback cho local dev
+│
+└── evaluation/
+    ├── eval_runner.py   # Offline evaluation
+    └── metrics.py       # Recall@k, MRR
+```
+
+### Luồng xử lý của QAService
+
+`src/rag_core/qa_service.py` là trung tâm điều phối RAG pipeline:
+
+1. Nhận câu hỏi từ API layer
+2. Gọi `embeddings.py` để embed câu hỏi thành vector 768/1024 chiều
+3. Gọi `vector_store.py` thực hiện cosine similarity search trên pgvector
+4. Gọi `reranker.py` (nếu bật) để cross-encoder rerank top-k → top-n
+5. Gọi `prompt.py` xây dựng prompt với ngữ cảnh pháp luật
+6. Gọi `generator.py` gửi prompt đến LLM và nhận câu trả lời
+7. Trả về response kèm sources và timings
+
+### Sơ đồ kết nối service
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                     EC2 Instance                             │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │              Docker Compose                          │    │
+│  │  ┌───────────────┐    ┌───────────────────────┐     │    │
+│  │  │  Streamlit    │───▶│  FastAPI (api)         │     │    │
+│  │  │  :8501        │    │  :8000                 │     │    │
+│  │  └───────────────┘    │  ├── /ask (no auth)    │     │    │
+│  │                        │  ├── /api/* (Cognito)  │     │    │
+│  │                        │  └── QAService         │     │    │
+│  │                        └──────────┬────────────┘     │    │
+│  └───────────────────────────────────┼──────────────────┘    │
+└──────────────────────────────────────┼───────────────────────┘
+                                       │
+              ┌────────────────────────┼────────────────────────┐
+              │                        │                        │
+              ▼                        ▼                        ▼
+   ┌──────────────────┐    ┌────────────────┐    ┌──────────────────┐
+   │  RDS PostgreSQL  │    │  Bedrock /     │    │  DynamoDB        │
+   │  + pgvector      │    │  Gemini API    │    │  (Chat History)  │
+   │  (Vector Store)  │    │  (LLM)         │    └──────────────────┘
+   └──────────────────┘    └────────────────┘
+              │
+              │ (Ingestion path)
+              │
+   ┌──────────────────┐    ┌────────────┐    ┌────────────┐
+   │  S3 (Documents)  │───▶│  SQS Queue │───▶│  Lambda    │
+   └──────────────────┘    └────────────┘    └────────────┘
+```
+
+### Network Architecture
+
+| Thành phần | Vị trí | Security Group |
+| --- | --- | --- |
+| EC2 (Docker) | Public subnet | Inbound: 8501, 8000 từ IP cho phép |
+| RDS PostgreSQL | Private subnet | Inbound: 5432 chỉ từ EC2 SG và Lambda SG |
+| Lambda | Private subnet (cùng VPC) | Outbound: 5432 tới RDS, 443 tới S3/Bedrock |
 
 ## Kết quả đạt được
 
