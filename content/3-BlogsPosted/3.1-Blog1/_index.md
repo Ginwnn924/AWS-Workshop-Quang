@@ -18,12 +18,10 @@ On the technical side, the challenge is **bidirectional audio** with low latency
 
 The data flow looks like this:
 
-```
 Browser (mic / speaker)
     ↔ AWS AppSync Events (2 pub/sub channels)
 Bedrock AgentCore container
     ↔ Amazon Nova Sonic (voice model on Bedrock)
-```
 
 **AWS AppSync Events** carries real-time traffic. The client publishes audio to an upstream channel via HTTP POST; the container subscribes over WebSocket to receive it. AI responses go to a downstream channel; the client subscribes and plays audio.
 
@@ -39,12 +37,12 @@ For intermittent sales usage, pay-per-use fits better than always-on infrastruct
 
 The section I learned most from is a production debugging story: voice sessions stopped after ~112 seconds because **two independent bugs existed at once**:
 
-1. The container lacked a `GET /ping` endpoint — AgentCore sends SIGKILL after ~120 seconds if health checks fail.
+1. The container lacked a **GET /ping** endpoint — AgentCore sends SIGKILL after ~120 seconds if health checks fail.
 2. WebSocket subscribe used the wrong AppSync DNS — you must use the API-specific endpoint, not the generic regional URL.
 
 Fixing only one bug still failed. CloudWatch logs showed 0 audio chunks while the client kept publishing — that clue led to the second issue.
 
-My takeaway checklist for AgentCore voice deploys: always implement `/ping`, use correct WebSocket DNS, pass model IDs via environment variables, disable HTTP/2 timeouts for long streams, and log audio chunk counts per session.
+My takeaway checklist for AgentCore voice deploys: always implement **/ping**, use correct WebSocket DNS, pass model IDs via environment variables, disable HTTP/2 timeouts for long streams, and log audio chunk counts per session.
 
 ## Connection to my internship project
 

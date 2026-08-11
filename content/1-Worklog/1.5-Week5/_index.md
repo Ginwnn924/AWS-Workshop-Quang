@@ -18,8 +18,8 @@ pre: " <b> 1.5. </b> "
 | --- | --- | --- | --- | --- |
 | Monday | - Practice RDS PostgreSQL lab: create instance, subnet group, security group <br> - Basic CloudFormation stack lab; CloudWatch dashboard and alarms <br> - Access S3 from EC2 via IAM Role | 20/07/2026 | 20/07/2026 | [Amazon RDS](https://000005.awsstudygroup.com/vi/) <br> [Amazon S3](https://000057.awsstudygroup.com/vi/) |
 | Tuesday | - Explore SageMaker Studio; handle Service Quotas errors when creating resources <br> - Learn Bedrock embedding models for migration phase | 21/07/2026 | 21/07/2026 | [Cloud Journey](https://cloudjourney.awsstudygroup.com/) <br> [Amazon Bedrock Baseline Architecture](https://aws.amazon.com/vi/blogs/architecture/amazon-bedrock-baseline-architecture-in-an-aws-landing-zone/) |
-| Wednesday | - Analyze legal dataset: deduplicate, normalize article/clause metadata <br> - Migrate vector store from local SQLite to RDS pgvector; rerun build index | 22/07/2026 | 22/07/2026 | Source code `vector_store/`, [Amazon RDS](https://000005.awsstudygroup.com/vi/) |
-| Thursday | - Create `legal_chunks` table with embedding vector(1536) column <br> - Optimize cosine search; configure connection pool and timeout | 23/07/2026 | 23/07/2026 | pgvector docs, `retriever.py` |
+| Wednesday | - Analyze legal dataset: deduplicate, normalize article/clause metadata <br> - Migrate vector store from local SQLite to RDS pgvector; rerun build index | 22/07/2026 | 22/07/2026 | Source code vector_store/, [Amazon RDS](https://000005.awsstudygroup.com/vi/) |
+| Thursday | - Create legal_chunks table with embedding vector(1536) column <br> - Optimize cosine search; configure connection pool and timeout | 23/07/2026 | 23/07/2026 | pgvector docs, retriever.py |
 | Friday | - Complete Week 1 Worklog <br> - Review report content; fix typos and Hugo formatting | 24/07/2026 | 24/07/2026 | [FCAJ Kick off](https://www.youtube.com/watch?v=AQlsd0nWdZk&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=1) |
 
 ### Week 5 Achievements

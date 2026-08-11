@@ -18,12 +18,10 @@ Phía kỹ thuật, thách thức là truyền **audio hai chiều** với độ
 
 Luồng dữ liệu có thể hình dung như sau:
 
-```
 Trình duyệt (mic / loa)
     ↔ AWS AppSync Events (2 kênh pub/sub)
 Container trên Bedrock AgentCore
     ↔ Amazon Nova Sonic (model giọng nói trên Bedrock)
-```
 
 **AWS AppSync Events** đóng vai trò vận chuyển real-time. Client gửi audio lên kênh upstream qua HTTP POST; container subscribe WebSocket để nhận. Phản hồi AI được đẩy xuống kênh downstream; client subscribe và phát qua loa.
 
@@ -39,12 +37,12 @@ Với use case sales — dùng gián đoạn, không liên tục — mô hình p
 
 Phần em học nhiều nhất là câu chuyện debug production: phiên voice bị dừng sau khoảng 112 giây vì **hai lỗi độc lập cùng tồn tại**:
 
-1. Container thiếu endpoint `GET /ping` — AgentCore gửi SIGKILL sau ~120 giây nếu health check không trả 200.
+1. Container thiếu endpoint **GET /ping** — AgentCore gửi SIGKILL sau ~120 giây nếu health check không trả 200.
 2. WebSocket subscribe sai DNS AppSync — phải dùng endpoint theo API ID, không dùng URL regional chung.
 
 Sửa một lỗi vẫn fail. Log CloudWatch ghi nhận 0 audio chunk dù client vẫn gửi — đó là manh mối để lần ra lỗi thứ hai.
 
-Từ đó em rút ra checklist khi deploy voice trên AgentCore: luôn có `/ping`, dùng đúng DNS WebSocket, cấu hình model ID qua biến môi trường, tắt timeout HTTP/2 cho stream dài, và log số chunk audio theo session.
+Từ đó em rút ra checklist khi deploy voice trên AgentCore: luôn có **/ping**, dùng đúng DNS WebSocket, cấu hình model ID qua biến môi trường, tắt timeout HTTP/2 cho stream dài, và log số chunk audio theo session.
 
 ## Liên hệ với dự án thực tập
 

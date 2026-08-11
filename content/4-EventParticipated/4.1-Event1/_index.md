@@ -29,7 +29,7 @@ The theory session covered the following topics:
 - **Short-term Memory:** stores raw conversation data for fast retrieval of recent context.
 - **Long-term Memory:** extracts insights and knowledge, stored as vectors for long-term use.
 - **Memory Strategies:** Summary, User Preference, Semantic, and Episodic.
-- **Namespace:** hierarchical organization (e.g. `/Strategy/Actor/Session`) to narrow search scope, reduce tokens, and speed up retrieval.
+- **Namespace:** hierarchical organization (e.g. **/Strategy/Actor/Session**) to narrow search scope, reduce tokens, and speed up retrieval.
 
 ### Evaluations
 

@@ -17,9 +17,9 @@ pre: " <b> 1.8. </b> "
 
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| Monday | - Complete Docker deploy on EC2: FastAPI + Chainlit UI in shared container/network <br> - Attach IAM Instance Role; migrate vector store from SQLite to production RDS | 10/08/2026 | 10/08/2026 | `deploy/Dockerfile` <br> [Amazon RDS](https://000005.awsstudygroup.com/vi/) |
-| Tuesday | - Integrate API Gateway REST: `/chat` route, CORS, dev/prod stages <br> - Token auth; display source citations in UI | 11/08/2026 | 11/08/2026 | [Frontend calls API Gateway](https://000079.awsstudygroup.com/vi/) <br> [AWS Cognito](https://000081.awsstudygroup.com/vi/) |
-| Wednesday | - Test ingestion pipeline with new legal files; verify chunks in RDS <br> - Benchmark P50/P95 latency via `benchmark_qa.py`; security review | 12/08/2026 | 12/08/2026 | `benchmark_qa.py` <br> [AWS IAM](https://000002.awsstudygroup.com/vi/) |
+| Monday | - Complete Docker deploy on EC2: FastAPI + Chainlit UI in shared container/network <br> - Attach IAM Instance Role; migrate vector store from SQLite to production RDS | 10/08/2026 | 10/08/2026 | deploy/Dockerfile <br> [Amazon RDS](https://000005.awsstudygroup.com/vi/) |
+| Tuesday | - Integrate API Gateway REST: **/chat** route, CORS, dev/prod stages <br> - Token auth; display source citations in UI | 11/08/2026 | 11/08/2026 | [Frontend calls API Gateway](https://000079.awsstudygroup.com/vi/) <br> [AWS Cognito](https://000081.awsstudygroup.com/vi/) |
+| Wednesday | - Test ingestion pipeline with new legal files; verify chunks in RDS <br> - Benchmark P50/P95 latency via benchmark_qa.py; security review | 12/08/2026 | 12/08/2026 | benchmark_qa.py <br> [AWS IAM](https://000002.awsstudygroup.com/vi/) |
 | Thursday | - Fix remaining issues <br> - Complete Hugo report, Blog 3, Event 3; deploy site to GitHub Pages | 13/08/2026 | 13/08/2026 | [Cloud Journey](https://cloudjourney.awsstudygroup.com/) |
 | Friday | - End-of-term Law-Chatbot demo with mentor: legal Q&A + source citations <br> - Submit full 8-week worklog; clean up unused AWS resources | 14/08/2026 | 14/08/2026 | [AWS Support & Cleanup](https://000009.awsstudygroup.com/vi/) <br> [hcm-rules.awsfcaj.com](https://hcm-rules.awsfcaj.com/) |
 

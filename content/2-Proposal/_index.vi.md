@@ -14,7 +14,7 @@ pre: " <b> 2. </b> "
 
 Vietnamese Legal RAG Chatbot là hệ thống cho phép người dùng đặt câu hỏi bằng tiếng Việt về các văn bản pháp luật (Luật, Nghị định, Thông tư...) và nhận câu trả lời có trích dẫn nguồn. Hệ thống sử dụng pipeline RAG: truy xuất các đoạn văn bản luật liên quan từ cơ sở vector, sau đó gửi sang mô hình ngôn ngữ lớn (LLM) trên **Amazon Bedrock** để sinh câu trả lời chính xác, tránh hallucination so với chatbot thuần LLM.
 
-Giải pháp hướng tới quy mô nội bộ (phòng ban pháp chế, trung tâm nghiên cứu, sinh viên luật) với khoảng 10–50 người dùng đồng thời, corpus ban đầu từ dataset HuggingFace `NguyenKH/clean_legal_knowledge` và khả năng bổ sung văn bản mới qua kênh admin upload.
+Giải pháp hướng tới quy mô nội bộ (phòng ban pháp chế, trung tâm nghiên cứu, sinh viên luật) với khoảng 10–50 người dùng đồng thời, corpus ban đầu từ dataset HuggingFace NguyenKH/clean_legal_knowledge và khả năng bổ sung văn bản mới qua kênh admin upload.
 
 **Demo triển khai:** [http://18.143.187.153:8501/](http://18.143.187.153:8501/) (Streamlit trên EC2, ap-southeast-1)
 
@@ -69,8 +69,8 @@ Xác thực người dùng qua **Amazon Cognito** (nhóm users/editors/admins). 
 **Thiết kế thành phần**
 
 * **Frontend/Chat UI:** Chainlit (demo/UAT) hoặc web app tích hợp Cognito (production).
-* **API Layer:** FastAPI với `/api/chat`, `/api/admin/*`, JWT middleware.
-* **RAG Core:** `QAService` — retriever pgvector, prompt builder, Bedrock generator.
+* **API Layer:** FastAPI với **/api/chat**, **/api/admin/***, JWT middleware.
+* **RAG Core:** QAService — retriever pgvector, prompt builder, Bedrock generator.
 * **Ingestion Worker:** Lambda handler đọc S3/SQS, hỗ trợ PDF/TXT, partial batch failure.
 * **Admin:** Presigned S3 upload, quản lý user Cognito, soft delete văn bản.
 
@@ -93,7 +93,7 @@ Xác thực người dùng qua **Amazon Cognito** (nhóm users/editors/admins). 
 * PostgreSQL 15+ với extension pgvector.
 * Docker container cho EC2/ECS deployment.
 * IAM least privilege; không commit credential vào git.
-* Region đề xuất: `ap-southeast-1` (Singapore).
+* Region đề xuất: **ap-southeast-1** (Singapore).
 
 **Liên kết triển khai**
 
@@ -102,7 +102,7 @@ Xác thực người dùng qua **Amazon Cognito** (nhóm users/editors/admins). 
 | **Repository** | [github.com/KhanhKoy/vietnamese-legal-llmops](https://github.com/KhanhKoy/vietnamese-legal-llmops) |
 | **Production (demo)** | [http://18.143.187.153:8501/](http://18.143.187.153:8501/) |
 
-Mã nguồn gồm `src/rag_core/`, `src/api/`, `infra/foundation.yaml`, `deploy/Dockerfile`. Môi trường demo chạy trên EC2 (ap-southeast-1) với giao diện Streamlit, kết nối RDS pgvector và Bedrock.
+Mã nguồn gồm src/rag_core/, src/api/, infra/foundation.yaml, deploy/Dockerfile. Môi trường demo chạy trên EC2 (ap-southeast-1) với giao diện Streamlit, kết nối RDS pgvector và Bedrock.
 
 ### 5. Lộ trình & Mốc triển khai
 

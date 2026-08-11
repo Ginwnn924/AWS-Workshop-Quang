@@ -18,9 +18,9 @@ pre: " <b> 1.4. </b> "
 | --- | --- | --- | --- | --- |
 | Thứ 2 | - Thực hành lab IAM: user, group, policy; bật MFA và least privilege <br> - Lab Cognito User Pool; quét Security Hub cơ bản <br> - Khởi tạo EC2 Linux, gắn EBS Snapshot, tạo Custom AMI | 13/07/2026 | 13/07/2026 | [AWS IAM](https://000002.awsstudygroup.com/vi/) <br> [AWS Cognito](https://000081.awsstudygroup.com/vi/) |
 | Thứ 3 | - Deploy app Node.js trên EC2 theo lab FCAJ <br> - Cấu hình IAM Instance Profile cho EC2 truy cập AWS service | 14/07/2026 | 14/07/2026 | [Cloud Journey](https://cloudjourney.awsstudygroup.com/) |
-| Thứ 4 | - Xây dựng RESTful API FastAPI: endpoint `/chat`, `/health`, CORS <br> - Deploy FastAPI lên EC2; kiểm tra kết nối RDS pgvector từ private subnet | 15/07/2026 | 15/07/2026 | FastAPI docs, source code `api/` |
-| Thứ 5 | - Viết `Dockerfile` multi-stage cho FastAPI + Chainlit UI <br> - Build/push image; chạy container trên EC2 với biến môi trường `.env` | 16/07/2026 | 16/07/2026 | `deploy/Dockerfile`, Docker docs |
-| Thứ 6 | - Thiết kế VPC 3 tầng: public, private, isolated <br> - Cấu hình Gateway Endpoint và Interface Endpoint | 17/07/2026 | 17/07/2026 | [Amazon VPC](https://000003.awsstudygroup.com/vi/) <br> [Workshop S3 VPC Endpoint](/vi/5-workshop/5.3-s3-vpc/) |
+| Thứ 4 | - Xây dựng RESTful API FastAPI: endpoint **/chat**, **/health**, CORS <br> - Deploy FastAPI lên EC2; kiểm tra kết nối RDS pgvector từ private subnet | 15/07/2026 | 15/07/2026 | FastAPI docs, source code api/ |
+| Thứ 5 | - Viết Dockerfile multi-stage cho FastAPI + Chainlit UI <br> - Build/push image; chạy container trên EC2 với biến môi trường .env | 16/07/2026 | 16/07/2026 | deploy/Dockerfile, Docker docs |
+| Thứ 6 | - Thiết kế VPC 3 tầng: public, private, isolated <br> - Cấu hình Gateway Endpoint và Interface Endpoint | 17/07/2026 | 17/07/2026 | [Amazon VPC](https://000003.awsstudygroup.com/vi/) <br> [Workshop Overview](/vi/5-workshop/5.1-workshop-overview/) |
 
 ### Kết quả đạt được tuần 4
 

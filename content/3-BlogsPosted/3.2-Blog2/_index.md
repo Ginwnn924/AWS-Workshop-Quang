@@ -39,8 +39,8 @@ Three priority flows (JMS priority levels):
 The overall flow I noted:
 
 1. Client sends a request via REST API (Spring Boot on App Runner).
-2. App classifies priority → high goes straight to queue; standard/low may delay first (demo uses `CompletableFuture` at app layer).
-3. Message publishes to **Amazon MQ** (ActiveMQ) with `setJMSPriority()`.
+2. App classifies priority → high goes straight to queue; standard/low may delay first (demo uses CompletableFuture at app layer).
+3. Message publishes to **Amazon MQ** (ActiveMQ) with setJMSPriority().
 4. Consumer processes in priority order; updates status in **DynamoDB**.
 5. **DynamoDB Streams** triggers Lambda → pushes updates through **API Gateway WebSocket** → React frontend shows live status.
 
@@ -62,7 +62,7 @@ Amazon MQ provides persistence, failover, and DLQ for failed messages. App Runne
 
 **Low-priority path:** priority 0 — consumers process after higher-priority messages are cleared.
 
-A note from the article: the demo uses **application-level delay** (`CompletableFuture`) to illustrate bypass behavior. Production should use native Amazon MQ/ActiveMQ delay features — `AMQ_SCHEDULED_DELAY`, delay queues, TTL — for better scalability.
+A note from the article: the demo uses **application-level delay** (CompletableFuture) to illustrate bypass behavior. Production should use native Amazon MQ/ActiveMQ delay features — AMQ_SCHEDULED_DELAY, delay queues, TTL — for better scalability.
 
 ## Real-time UI and reliability
 

@@ -14,7 +14,7 @@ pre: " <b> 2. </b> "
 
 Vietnamese Legal RAG Chatbot allows users to ask questions in Vietnamese about legal texts (Laws, Decrees, Circulars, etc.) and receive answers with source citations. The system uses an RAG pipeline: retrieve relevant legal text chunks from a vector store, then pass them to a large language model (LLM) on **Amazon Bedrock** to generate accurate answers and reduce hallucination compared to a pure LLM chatbot.
 
-The solution targets internal use (legal departments, research centers, law students) with roughly 10–50 concurrent users. The initial corpus comes from the HuggingFace dataset `NguyenKH/clean_legal_knowledge`, with the ability to add new documents via admin upload.
+The solution targets internal use (legal departments, research centers, law students) with roughly 10–50 concurrent users. The initial corpus comes from the HuggingFace dataset NguyenKH/clean_legal_knowledge, with the ability to add new documents via admin upload.
 
 **Live demo:** [http://18.143.187.153:8501/](http://18.143.187.153:8501/) (Streamlit on EC2, ap-southeast-1)
 
@@ -69,8 +69,8 @@ User authentication via **Amazon Cognito** (users/editors/admins groups). Conver
 **Component Design**
 
 * **Frontend/Chat UI:** Chainlit (demo/UAT) or web app integrated with Cognito (production).
-* **API Layer:** FastAPI with `/api/chat`, `/api/admin/*`, JWT middleware.
-* **RAG Core:** `QAService` — pgvector retriever, prompt builder, Bedrock generator.
+* **API Layer:** FastAPI with **/api/chat**, **/api/admin/***, JWT middleware.
+* **RAG Core:** QAService — pgvector retriever, prompt builder, Bedrock generator.
 * **Ingestion Worker:** Lambda handler reading S3/SQS, supports PDF/TXT, partial batch failure.
 * **Admin:** Presigned S3 upload, Cognito user management, soft delete for documents.
 
@@ -93,7 +93,7 @@ User authentication via **Amazon Cognito** (users/editors/admins groups). Conver
 * PostgreSQL 15+ with pgvector extension.
 * Docker container for EC2/ECS deployment.
 * IAM least privilege; do not commit credentials to git.
-* Recommended region: `ap-southeast-1` (Singapore).
+* Recommended region: **ap-southeast-1** (Singapore).
 
 **Deployment Links**
 
@@ -102,7 +102,7 @@ User authentication via **Amazon Cognito** (users/editors/admins groups). Conver
 | **Repository** | [github.com/KhanhKoy/vietnamese-legal-llmops](https://github.com/KhanhKoy/vietnamese-legal-llmops) |
 | **Production (demo)** | [http://18.143.187.153:8501/](http://18.143.187.153:8501/) |
 
-Source code includes `src/rag_core/`, `src/api/`, `infra/foundation.yaml`, `deploy/Dockerfile`. The demo environment runs on EC2 (ap-southeast-1) with a Streamlit UI, connected to RDS pgvector and Bedrock.
+Source code includes src/rag_core/, src/api/, infra/foundation.yaml, deploy/Dockerfile. The demo environment runs on EC2 (ap-southeast-1) with a Streamlit UI, connected to RDS pgvector and Bedrock.
 
 ### 5. Timeline & Milestones
 

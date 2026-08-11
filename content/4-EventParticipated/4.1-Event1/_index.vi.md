@@ -29,7 +29,7 @@ Phần lý thuyết bao gồm các chủ đề sau:
 - **Short-term Memory:** lưu dữ liệu thô từ hội thoại, đồng bộ để truy xuất nhanh thông tin gần nhất.
 - **Long-term Memory:** trích xuất insight và tri thức từ hội thoại, chuyển thành vector để lưu trữ lâu dài.
 - **Memory Strategies:** gồm Summary, User Preference, Semantic và Episodic.
-- **Namespace:** tổ chức dữ liệu theo cấu trúc phân cấp như `/Strategy/Actor/Session`, giúp thu hẹp phạm vi tìm kiếm, giảm token và tăng tốc truy xuất.
+- **Namespace:** tổ chức dữ liệu theo cấu trúc phân cấp như **/Strategy/Actor/Session**, giúp thu hẹp phạm vi tìm kiếm, giảm token và tăng tốc truy xuất.
 
 ### Evaluations
 

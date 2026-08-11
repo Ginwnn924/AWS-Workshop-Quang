@@ -28,7 +28,7 @@ During the internship I learned many new skills:
 
 * Deploying and configuring AWS services (EC2, S3, RDS, Lambda, Cognito, Bedrock...).
 * Designing end-to-end RAG pipelines — not just calling a ready-made chatbot API.
-* Basic Infrastructure as Code with CloudFormation (`foundation.yaml` stack).
+* Basic Infrastructure as Code with CloudFormation (foundation.yaml stack).
 * Soft skills: weekly worklog reporting, product demo, receiving and applying feedback.
 
 [Cloud Journey](https://cloudjourney.awsstudygroup.com/) and internal workshop materials were essential references throughout all 8 weeks. Lab links from AWS Study Group (IAM, VPC, RDS, S3, Cognito, Lambda) saved significant setup time compared to reading raw AWS docs alone.

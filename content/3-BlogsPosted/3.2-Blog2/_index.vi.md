@@ -39,8 +39,8 @@ Ba luồng priority (JMS priority levels):
 Luồng tổng quát em ghi chú:
 
 1. Client gửi request qua REST API (Spring Boot trên App Runner).
-2. App phân loại priority → high đi thẳng queue; standard/low có thể delay trước (demo dùng `CompletableFuture` ở app layer).
-3. Message publish lên **Amazon MQ** (ActiveMQ) với `setJMSPriority()`.
+2. App phân loại priority → high đi thẳng queue; standard/low có thể delay trước (demo dùng CompletableFuture ở app layer).
+3. Message publish lên **Amazon MQ** (ActiveMQ) với setJMSPriority().
 4. Consumer xử lý theo thứ tự priority; cập nhật trạng thái vào **DynamoDB**.
 5. **DynamoDB Streams** trigger Lambda → đẩy update qua **API Gateway WebSocket** → React frontend hiển thị live.
 
@@ -62,7 +62,7 @@ Amazon MQ cung cấp persistence, failover, DLQ cho message fail. App Runner aut
 
 **Low-priority path:** priority 0 — consumer xử lý sau khi queue đã hết message cao hơn.
 
-Em chú ý lưu ý trong bài: demo dùng **application-level delay** (`CompletableFuture`) để minh họa bypass behavior. Production nên dùng tính năng delay native của Amazon MQ/ActiveMQ — `AMQ_SCHEDULED_DELAY`, delay queues, TTL — ổn định hơn khi scale.
+Em chú ý lưu ý trong bài: demo dùng **application-level delay** (CompletableFuture) để minh họa bypass behavior. Production nên dùng tính năng delay native của Amazon MQ/ActiveMQ — AMQ_SCHEDULED_DELAY, delay queues, TTL — ổn định hơn khi scale.
 
 ## Real-time UI và reliability
 

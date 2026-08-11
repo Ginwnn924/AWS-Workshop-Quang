@@ -29,7 +29,7 @@ Với ATO bằng SIM swap, “gần đây” có nghĩa là **vài phút đến 
 
 ## Ba trụ cột giải pháp Vonage
 
-Vonage gom ba API thành stack bảo mật tích hợp với Cognito qua luồng **`CUSTOM_AUTH`**:
+Vonage gom ba API thành stack bảo mật tích hợp với Cognito qua luồng **CUSTOM_AUTH**:
 
 ### 1. Identity Insights — kiểm tra trước khi gửi OTP
 
@@ -37,11 +37,11 @@ Chạy **trước** khi khởi tạo kênh xác minh. Một số tín hiệu em 
 
 | Tín hiệu | Ý nghĩa theo em hiểu |
 |----------|----------------------|
-| `format`, `network_type` | Lọc số không hợp lệ, VoIP, điện thoại bàn, số premium-rate — thường dùng tạo tài khoản giả |
-| `sim_swap` | Phát hiện đổi SIM trong khoảng thời gian cấu hình — dấu hiệu ATO đang diễn ra |
-| `subscriber_match` | So khớp tên/địa chỉ với hồ sơ KYC của nhà mạng |
-| `device_swap` *(sắp có)* | Đổi thiết bị gắn với số — có thể kẻ xấu đã chiếm SIM |
-| `recycled_number` *(sắp có)* | Số đã thu hồi và cấp lại — rủi ro onboarding nhầm danh tính |
+| format, network_type | Lọc số không hợp lệ, VoIP, điện thoại bàn, số premium-rate — thường dùng tạo tài khoản giả |
+| sim_swap | Phát hiện đổi SIM trong khoảng thời gian cấu hình — dấu hiệu ATO đang diễn ra |
+| subscriber_match | So khớp tên/địa chỉ với hồ sơ KYC của nhà mạng |
+| device_swap *(sắp có)* | Đổi thiết bị gắn với số — có thể kẻ xấu đã chiếm SIM |
+| recycled_number *(sắp có)* | Số đã thu hồi và cấp lại — rủi ro onboarding nhầm danh tính |
 
 Kết quả pre-check kích hoạt **chính sách rủi ro**: step-up challenge, chặn cứng, hoặc log im lặng. Gian lận bị chặn **trước khi gửi một OTP nào** — tiết kiệm chi phí SMS và xử lý fraud.
 
@@ -71,7 +71,7 @@ Năm lớp em tóm tắt:
 
 | Lớp | Vai trò |
 |-----|---------|
-| Client app (mobile/web) | Khởi tạo `CUSTOM_AUTH`, mở `check_url` qua mạng di động, gửi mã xác minh về Cognito |
+| Client app (mobile/web) | Khởi tạo CUSTOM_AUTH, mở check_url qua mạng di động, gửi mã xác minh về Cognito |
 | Amazon Cognito User Pool | Điều phối challenge flow, phát JWT khi thành công |
 | 3 Lambda triggers | Define Auth Challenge, Create Auth Challenge (gọi Vonage), Verify Auth Challenge |
 | Vonage APIs | Identity Insights + Verify + Fraud Defender |
@@ -83,14 +83,14 @@ Năm lớp em tóm tắt:
 
 Luồng 6 bước em ghi lại:
 
-1. Client gọi `InitiateAuth` với `CUSTOM_AUTH`, truyền số điện thoại.
-2. Lambda **Define Auth Challenge** → Cognito phát `CUSTOM_CHALLENGE`.
-3. Lambda **Create Auth Challenge** → gọi Identity Insights → nếu pass, gọi Verify Silent Auth → trả `check_url` cho client.
-4. Client mở HTTPS tới `check_url` → redirect qua mạng nhà mạng → nhận mã xác minh.
-5. Client gọi `RespondToAuthChallenge` với mã.
+1. Client gọi InitiateAuth với CUSTOM_AUTH, truyền số điện thoại.
+2. Lambda **Define Auth Challenge** → Cognito phát CUSTOM_CHALLENGE.
+3. Lambda **Create Auth Challenge** → gọi Identity Insights → nếu pass, gọi Verify Silent Auth → trả check_url cho client.
+4. Client mở HTTPS tới check_url → redirect qua mạng nhà mạng → nhận mã xác minh.
+5. Client gọi RespondToAuthChallenge với mã.
 6. Lambda **Verify Auth Challenge** → xác nhận với Vonage → Cognito cấp session token.
 
-Điểm em đánh giá cao: **không cần đổi user pool hay app client hiện có** — plug vào `CUSTOM_AUTH`, deploy bằng `sam deploy`. Có thể rollout từng phase: bắt đầu journey rủi ro cao (đổi mật khẩu, giao dịch lớn), mở rộng dần sang login hàng ngày.
+Điểm em đánh giá cao: **không cần đổi user pool hay app client hiện có** — plug vào CUSTOM_AUTH, deploy bằng sam deploy. Có thể rollout từng phase: bắt đầu journey rủi ro cao (đổi mật khẩu, giao dịch lớn), mở rộng dần sang login hàng ngày.
 
 ## Xác thực theo mức rủi ro từng journey
 
@@ -132,7 +132,7 @@ Bài cũng nhắc em **chi phí ẩn của OTP**: không chỉ fraud mà cả us
 
 Thay vì áp cùng một lớp xác minh cho mọi session, doanh nghiệp có thể dùng **tín hiệu mạng real-time** để quyết định: xác thực im lặng khi an toàn, step-up khi có dấu hiệu rủi ro, chặn khi phát hiện fraud.
 
-Stack Vonage (Identity Insights + Verify + Fraud Defender) + Cognito `CUSTOM_AUTH` là ví dụ **bảo mật và UX không loại trừ nhau** — triển khai với 3 Lambda, có thể bắt đầu từ journey rủi ro cao rồi mở rộng. Kiến thức hữu ích cho em khi thiết kế hệ thống có Cognito và user mobile-first sau khi tốt nghiệp.
+Stack Vonage (Identity Insights + Verify + Fraud Defender) + Cognito CUSTOM_AUTH là ví dụ **bảo mật và UX không loại trừ nhau** — triển khai với 3 Lambda, có thể bắt đầu từ journey rủi ro cao rồi mở rộng. Kiến thức hữu ích cho em khi thiết kế hệ thống có Cognito và user mobile-first sau khi tốt nghiệp.
 
 ### Reference
 

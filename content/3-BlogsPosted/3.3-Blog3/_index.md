@@ -29,7 +29,7 @@ For ATO via SIM swap, "recently" means **minutes to hours** — weekly-refreshed
 
 ## Vonage's three pillars
 
-Vonage combines three APIs into a security stack integrated with Cognito through the **`CUSTOM_AUTH`** flow:
+Vonage combines three APIs into a security stack integrated with Cognito through the **CUSTOM_AUTH** flow:
 
 ### 1. Identity Insights — pre-verification checks
 
@@ -37,11 +37,11 @@ Runs **before** verification channels start. Signals I noted:
 
 | Signal | Meaning in my understanding |
 |--------|----------------------------|
-| `format`, `network_type` | Filter invalid, VoIP, landline, premium-rate numbers — common in synthetic accounts and bot fraud |
-| `sim_swap` | Detect SIM swaps within a configurable window — leading ATO indicator |
-| `subscriber_match` | Match name/address against operator KYC records |
-| `device_swap` *(coming soon)* | Recent device change on a number may mean SIM compromise |
-| `recycled_number` *(coming soon)* | Reassigned numbers risk false identity matches at onboarding |
+| format, network_type | Filter invalid, VoIP, landline, premium-rate numbers — common in synthetic accounts and bot fraud |
+| sim_swap | Detect SIM swaps within a configurable window — leading ATO indicator |
+| subscriber_match | Match name/address against operator KYC records |
+| device_swap *(coming soon)* | Recent device change on a number may mean SIM compromise |
+| recycled_number *(coming soon)* | Reassigned numbers risk false identity matches at onboarding |
 
 Pre-checks trigger **risk policy**: step-up challenge, hard block, or silent logging. Fraud is blocked **before a single OTP is sent** — saving SMS cost and fraud processing overhead.
 
@@ -71,7 +71,7 @@ Five layers I summarized:
 
 | Layer | Role |
 |-------|------|
-| Client app (mobile/web) | Starts `CUSTOM_AUTH`, opens `check_url` over cellular network, submits verification code to Cognito |
+| Client app (mobile/web) | Starts CUSTOM_AUTH, opens check_url over cellular network, submits verification code to Cognito |
 | Amazon Cognito User Pool | Orchestrates challenge flow, issues JWT on success |
 | 3 Lambda triggers | Define Auth Challenge, Create Auth Challenge (calls Vonage), Verify Auth Challenge |
 | Vonage APIs | Identity Insights + Verify + Fraud Defender |
@@ -83,14 +83,14 @@ Five layers I summarized:
 
 Six steps I recorded:
 
-1. Client calls `InitiateAuth` with `CUSTOM_AUTH`, passing the phone number.
-2. **Define Auth Challenge** Lambda → Cognito issues `CUSTOM_CHALLENGE`.
-3. **Create Auth Challenge** Lambda → calls Identity Insights → if pass, calls Verify Silent Auth → returns `check_url` to client.
-4. Client opens HTTPS to `check_url` → redirects through carrier network → receives verification code.
-5. Client calls `RespondToAuthChallenge` with the code.
+1. Client calls InitiateAuth with CUSTOM_AUTH, passing the phone number.
+2. **Define Auth Challenge** Lambda → Cognito issues CUSTOM_CHALLENGE.
+3. **Create Auth Challenge** Lambda → calls Identity Insights → if pass, calls Verify Silent Auth → returns check_url to client.
+4. Client opens HTTPS to check_url → redirects through carrier network → receives verification code.
+5. Client calls RespondToAuthChallenge with the code.
 6. **Verify Auth Challenge** Lambda → confirms with Vonage → Cognito issues session token.
 
-What I valued: **no need to change existing user pool or app client** — plug into `CUSTOM_AUTH`, deploy with `sam deploy`. Phased rollout is possible: start with high-risk journeys (password recovery, high-value transactions), expand to daily login.
+What I valued: **no need to change existing user pool or app client** — plug into CUSTOM_AUTH, deploy with sam deploy. Phased rollout is possible: start with high-risk journeys (password recovery, high-value transactions), expand to daily login.
 
 ## Risk-aware authentication by journey
 
@@ -132,7 +132,7 @@ The article also reminded me of **hidden OTP costs**: not only fraud but user dr
 
 Instead of applying the same verification friction to every session, enterprises can use **real-time network signals** to decide: verify silently when safe, step up when risk appears, block when fraud is detected.
 
-The Vonage stack (Identity Insights + Verify + Fraud Defender) plus Cognito `CUSTOM_AUTH` shows **security and UX are not mutually exclusive** — deployable with three Lambdas, starting from high-risk journeys and expanding. Useful knowledge for designing Cognito-based, mobile-first systems after graduation.
+The Vonage stack (Identity Insights + Verify + Fraud Defender) plus Cognito CUSTOM_AUTH shows **security and UX are not mutually exclusive** — deployable with three Lambdas, starting from high-risk journeys and expanding. Useful knowledge for designing Cognito-based, mobile-first systems after graduation.
 
 ### Reference
 
