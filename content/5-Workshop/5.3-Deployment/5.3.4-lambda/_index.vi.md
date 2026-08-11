@@ -75,11 +75,3 @@ BEDROCK_EMBEDDING_MODEL=amazon.titan-embed-text-v2:0
 LEGAL_DOCUMENTS_BUCKET=...
 ```
 
-## Kiểm tra
-
-- [ ] Upload PDF/TXT lên S3 → SQS nhận message
-- [ ] Log Lambda hiển thị chunk + embed thành công
-- [ ] Dòng mới xuất hiện trong `legal_chunks`
-- [ ] Message lỗi test chuyển sang DLQ sau retry
-
-Tiếp theo: cấu hình **Amazon Bedrock** cho embedding và LLM.

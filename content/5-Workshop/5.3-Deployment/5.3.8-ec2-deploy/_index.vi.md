@@ -82,12 +82,3 @@ Gắn role với policy:
 - `s3:GetObject`, `s3:PutObject` (nếu app ghi S3)
 - `dynamodb:*` (nếu bật chat history)
 
-## Kiểm tra
-
-- [ ] Cả hai container đang chạy (`docker compose ps`)
-- [ ] Streamlit mở được :8501
-- [ ] Câu hỏi chat trả answer + sources
-- [ ] Log API kết nối Bedrock và RDS OK
-- [ ] Không hard-code credential trong image/compose
-
-Tiếp theo: **kiểm thử hệ thống** toàn bộ các lớp.

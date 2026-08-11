@@ -83,11 +83,4 @@ python scripts/build_index.py
 | Query timeout | Tránh truy vấn similarity quá lâu |
 | Fallback exact search | Dùng khi chưa tạo index HNSW/IVFFlat |
 
-## Kiểm tra
 
-- [ ] EC2 kết nối RDS port 5432 thành công
-- [ ] `CREATE EXTENSION vector` chạy OK
-- [ ] Bảng `legal_chunks` có dữ liệu sau build index
-- [ ] Truy vấn similarity mẫu trả chunk hợp lý
-
-Tiếp theo: cấu hình **Lambda ingestion** để xử lý tài liệu tự động.

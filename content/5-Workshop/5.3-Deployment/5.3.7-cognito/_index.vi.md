@@ -75,12 +75,4 @@ AUTH_DISABLED=false
 | `POST /api/admin/users/{username}/group` | Gán group |
 | `POST /api/admin/documents/upload-url` | Presigned upload S3 |
 
-## Kiểm tra
 
-- [ ] User Pool và groups đã tạo
-- [ ] JWT hợp lệ → `/api/chat` trả 200
-- [ ] Thiếu token → 401/403
-- [ ] User không phải admin bị chặn `/api/admin/*`
-- [ ] Admin list và quản lý user được
-
-Tiếp theo: cấu hình **VPC và network** cho EC2, RDS, Lambda.

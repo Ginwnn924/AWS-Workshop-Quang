@@ -69,11 +69,3 @@ Production nên giới hạn `Resource` theo ARN model cụ thể.
 Dev local có thể dùng `LLM_PROVIDER=gemini` và `GEMINI_API_KEY`. Bedrock là lựa chọn khuyến nghị trên EC2 với IAM role.
 {{% /notice %}}
 
-## Kiểm tra
-
-- [ ] Model access đã bật trên console
-- [ ] Gọi embedding test trả vector đúng dimension
-- [ ] Gọi LLM test trả câu trả lời từ prompt mẫu
-- [ ] `POST /ask` trên EC2 trả answer + sources
-
-Tiếp theo: cấu hình **DynamoDB** cho lịch sử hội thoại.

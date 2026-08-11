@@ -72,11 +72,3 @@ Cấu hình S3 event notification trên prefix `incoming/files/` gửi message t
 Mỗi file upload nên có manifest tương ứng trong `incoming/manifests/` để Lambda biết tiêu đề, loại tài liệu và metadata.
 {{% /notice %}}
 
-## Kiểm tra
-
-- [ ] Bucket tồn tại đúng region
-- [ ] Object test xuất hiện dưới `incoming/files/`
-- [ ] IAM role/user có quyền `s3:PutObject` và `s3:GetObject`
-- [ ] `LEGAL_DOCUMENTS_BUCKET` đã set trong `.env`
-
-Tiếp theo: cấu hình **RDS PostgreSQL + pgvector** để lưu vector.

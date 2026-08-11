@@ -60,12 +60,3 @@ Demo lab thường dùng EC2 public subnet + Internet Gateway — đơn giản h
 - Terminate TLS tại ALB
 - EC2 SG chỉ nhận từ ALB SG (đóng 8501 trực tiếp từ Internet)
 
-## Kiểm tra
-
-- [ ] EC2 và RDS cùng VPC
-- [ ] RDS SG chỉ mở 5432 từ EC2/Lambda SG
-- [ ] EC2 gọi được Bedrock và S3
-- [ ] Lambda trong VPC kết nối RDS (nếu dùng serverless ingestion)
-- [ ] Streamlit truy cập được :8501 từ IP cho phép
-
-Tiếp theo: **deploy Docker Compose trên EC2**.
