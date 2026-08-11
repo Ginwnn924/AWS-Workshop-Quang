@@ -1,4 +1,4 @@
----
+﻿---
 title: "Worklog Tuần 3"
 date: 2024-01-01
 weight: 1
@@ -16,11 +16,11 @@ pre: " <b> 1.3. </b> "
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Họp nhóm chốt đề tài **Vietnamese Legal Chatbot** <br> - Viết Proposal: mục tiêu, phạm vi, use case, lộ trình và dịch vụ AWS dự kiến | 06/07/2026 | 06/07/2026 | [Amazon Bedrock Baseline Architecture](https://aws.amazon.com/vi/blogs/architecture/amazon-bedrock-baseline-architecture-in-an-aws-landing-zone/) |
-| 3 | - Vẽ sơ đồ kiến trúc RAG Serverless (ALB → EC2 → RDS pgvector → Bedrock) <br> - Cập nhật tài liệu `AWS_chatbot.txt` mô tả 3 luồng chính | 07/07/2026 | 07/07/2026 | [Draw.io Guide](https://www.youtube.com/watch?v=l8isyDe-GwY&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=2) |
-| 4 | - Hoàn thiện `retriever`, `prompt`, `generator`, `qa_service` <br> - Cấu hình LLM provider: Gemini (dev) / Bedrock (AWS) | 08/07/2026 | 08/07/2026 | Source code `rag_core/` |
-| 5 | - Tích hợp Chainlit làm giao diện chat; stream câu trả lời realtime <br> - Thiết kế prompt yêu cầu trích dẫn điều/khoản nguồn luật | 09/07/2026 | 09/07/2026 | Chainlit docs, `prompt.py` |
-| 6 | - Xử lý Git submodule, IAM, GitHub cho repo nhóm <br> - Kiểm thử hỏi đáp; chỉnh prompt và top_k theo kết quả retrieval | 10/07/2026 | 10/07/2026 | GitHub repo dự án <br> [AWS IAM](https://000002.awsstudygroup.com/vi/) |
+| Thứ 2 | - Họp nhóm chốt đề tài Vietnamese Legal Chatbot <br> - Viết Proposal: mục tiêu, phạm vi, use case, lộ trình và dịch vụ AWS dự kiến | 06/07/2026 | 06/07/2026 | [Amazon Bedrock Baseline Architecture](https://aws.amazon.com/vi/blogs/architecture/amazon-bedrock-baseline-architecture-in-an-aws-landing-zone/) |
+| Thứ 3 | - Vẽ sơ đồ kiến trúc RAG Serverless <br> - Cập nhật tài liệu `AWS_chatbot.txt` mô tả 3 luồng chính | 07/07/2026 | 07/07/2026 | [Draw.io Guide](https://www.youtube.com/watch?v=l8isyDe-GwY&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=2) |
+| Thứ 4 | - Hoàn thiện `retriever`, `prompt`, `generator`, `qa_service` <br> - Cấu hình LLM provider: Gemini / Bedrock | 08/07/2026 | 08/07/2026 | Source code `rag_core/` |
+| Thứ 5 | - Tích hợp Chainlit làm giao diện chat; stream câu trả lời realtime <br> - Thiết kế prompt yêu cầu trích dẫn điều/khoản nguồn luật | 09/07/2026 | 09/07/2026 | Chainlit docs, `prompt.py` |
+| Thứ 6 | - Xử lý Git submodule, IAM, GitHub cho repo nhóm <br> - Kiểm thử hỏi đáp; chỉnh prompt và top_k theo kết quả retrieval | 10/07/2026 | 10/07/2026 | GitHub repo dự án <br> [AWS IAM](https://000002.awsstudygroup.com/vi/) |
 
 ### Kết quả đạt được tuần 3
 
