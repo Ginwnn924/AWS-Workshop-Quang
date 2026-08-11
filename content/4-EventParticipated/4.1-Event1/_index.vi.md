@@ -75,6 +75,6 @@ Phần thực hành giúp em làm quen Agent SDK, AWS Bedrock và AWS CLI — t�
 
 ## Một số hình ảnh khi tham gia sự kiện
 
-![Tham gia Agent Forge Day 2](/images/4-Events/ev2-1.jpg)
+![Tham gia Agent Forge Day 2](images/4-Events/ev2-1.jpg)
 
-![Tham gia Agent Forge Day 2](/images/4-Events/ev2-2.jpg)
+![Tham gia Agent Forge Day 2](images/4-Events/ev2-2.jpg)

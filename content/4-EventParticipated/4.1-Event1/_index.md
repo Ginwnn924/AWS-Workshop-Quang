@@ -75,6 +75,6 @@ The hands-on portion introduced Agent SDK, AWS Bedrock, and AWS CLI — from pro
 
 ## Event photos
 
-![Agent Forge Day 2](/images/4-Events/ev2-1.jpg)
+![Agent Forge Day 2](images/4-Events/ev2-1.jpg)
 
-![Agent Forge Day 2](/images/4-Events/ev2-2.jpg)
+![Agent Forge Day 2](images/4-Events/ev2-2.jpg)

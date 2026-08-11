@@ -10,7 +10,7 @@ pre: " <b> 5.9. </b> "
 
 VPC cô lập EC2, RDS và Lambda. Security Group kiểm soát port mà từng thành phần được phép truy cập — cần thiết cho deploy Law-Chatbot an toàn.
 
-![Tổng quan VPC](/images/5-Workshop/5.3-S3-vpc/vpc.png)
+![Tổng quan VPC](images/5-Workshop/5.3-S3-vpc/vpc.png)
 
 ## Sơ đồ network
 
@@ -40,7 +40,7 @@ graph TB;
 | **RDS SG** | 5432 từ EC2 SG và Lambda SG | — |
 | **Lambda SG** | — | 5432 tới RDS; 443 tới AWS API |
 
-![Sơ đồ network](/images/5-Workshop/5.3-S3-vpc/diagram2.png)
+![Sơ đồ network](images/5-Workshop/5.3-S3-vpc/diagram2.png)
 
 ## Tùy chọn: VPC endpoint
 

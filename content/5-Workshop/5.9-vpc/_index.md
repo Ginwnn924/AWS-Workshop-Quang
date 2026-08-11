@@ -10,7 +10,7 @@ pre: " <b> 5.9. </b> "
 
 The VPC isolates EC2, RDS, and Lambda. Security Groups control which ports each component can reach — essential for a secure Law-Chatbot deployment.
 
-![VPC overview](/images/5-Workshop/5.3-S3-vpc/vpc.png)
+![VPC overview](images/5-Workshop/5.3-S3-vpc/vpc.png)
 
 ## Network layout
 
@@ -40,7 +40,7 @@ graph TB;
 | **RDS SG** | 5432 from EC2 SG and Lambda SG | — |
 | **Lambda SG** | — | 5432 to RDS; 443 to AWS APIs |
 
-![Network diagram](/images/5-Workshop/5.3-S3-vpc/diagram2.png)
+![Network diagram](images/5-Workshop/5.3-S3-vpc/diagram2.png)
 
 ## Optional: VPC endpoints
 

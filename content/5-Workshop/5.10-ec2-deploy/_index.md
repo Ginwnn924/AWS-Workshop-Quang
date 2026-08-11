@@ -10,7 +10,7 @@ pre: " <b> 5.10. </b> "
 
 Production demo runs two containers on EC2 via Docker Compose: **FastAPI** (port 8000) and **Streamlit** (port 8501). Streamlit calls the API over the Docker internal network.
 
-![EC2 deploy](/images/5-Workshop/5.2-Prerequisite/ec2.png)
+![EC2 deploy](images/5-Workshop/5.2-Prerequisite/ec2.png)
 
 ## Container architecture
 
@@ -72,7 +72,7 @@ EC2 should use an **IAM Instance Role** (not Access Keys) for Bedrock and S3.
 | End-to-end | Ask a legal question in chatbot UI |
 | Container logs | `docker compose logs api streamlit` |
 
-![Deploy complete](/images/5-Workshop/5.2-Prerequisite/complete.png)
+![Deploy complete](images/5-Workshop/5.2-Prerequisite/complete.png)
 
 ## IAM on EC2
 

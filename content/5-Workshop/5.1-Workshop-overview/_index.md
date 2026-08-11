@@ -101,7 +101,7 @@ Details: [Backend](5.1.2-backend/)
 | **Amazon Cognito** | Auth/RBAC for admin API |
 | **CloudFormation** | Foundation resources (`infra/foundation.yaml`) |
 
-![Vietnamese Legal RAG Chatbot architecture](/images/2-Proposal/legal_chatbot_architecture.png)
+![Vietnamese Legal RAG Chatbot architecture](images/2-Proposal/legal_chatbot_architecture.png)
 
 **Demo path:** Streamlit **8501** → **POST /ask** → FastAPI **8000** → QAService → RDS pgvector + Bedrock. Demo instance: **EC2 t3a.small**.
 

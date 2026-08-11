@@ -45,7 +45,7 @@ Xác thực người dùng qua **Amazon Cognito** (nhóm users/editors/admins). 
 
 ### 3. Kiến trúc giải pháp
 
-![Kiến trúc Vietnamese Legal RAG Chatbot](/images/2-Proposal/legal_chatbot_architecture.png)
+![Kiến trúc Vietnamese Legal RAG Chatbot](images/2-Proposal/legal_chatbot_architecture.png)
 
 **Dịch vụ AWS sử dụng**
 

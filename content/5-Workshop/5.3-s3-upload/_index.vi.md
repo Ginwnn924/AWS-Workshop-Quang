@@ -10,7 +10,7 @@ pre: " <b> 5.3. </b> "
 
 Amazon S3 lưu tài liệu pháp luật và manifest ingestion. Khi có file mới, S3 event kích hoạt luồng xử lý phía sau (SQS → Lambda → RDS).
 
-![Tổng quan S3](/images/5-Workshop/5.3-S3-vpc/overview.png)
+![Tổng quan S3](images/5-Workshop/5.3-S3-vpc/overview.png)
 
 ## Vai trò trong hệ thống
 
@@ -37,7 +37,7 @@ graph LR;
 4. Block public access: **bật**
 5. Bật versioning (tùy chọn, khuyến nghị cho production)
 
-![Tạo bucket](/images/5-Workshop/5.3-S3-vpc/create-button.png)
+![Tạo bucket](images/5-Workshop/5.3-S3-vpc/create-button.png)
 
 ## Bước 2 — Cấu hình `.env`
 

@@ -10,7 +10,7 @@ pre: " <b> 5.3. </b> "
 
 Amazon S3 stores legal documents and ingestion manifests. When a new file arrives, S3 events trigger the downstream ingestion pipeline (SQS → Lambda → RDS).
 
-![S3 overview](/images/5-Workshop/5.3-S3-vpc/overview.png)
+![S3 overview](images/5-Workshop/5.3-S3-vpc/overview.png)
 
 ## Role in the system
 
@@ -37,7 +37,7 @@ graph LR;
 4. Block public access: **enabled**
 5. Enable versioning (optional, recommended for production)
 
-![Create bucket](/images/5-Workshop/5.3-S3-vpc/create-button.png)
+![Create bucket](images/5-Workshop/5.3-S3-vpc/create-button.png)
 
 ## Step 2 — Configure `.env`
 

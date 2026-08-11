@@ -10,7 +10,7 @@ pre: " <b> 5.10. </b> "
 
 Demo production chạy hai container trên EC2 qua Docker Compose: **FastAPI** (port 8000) và **Streamlit** (port 8501). Streamlit gọi API qua Docker internal network.
 
-![Deploy EC2](/images/5-Workshop/5.2-Prerequisite/ec2.png)
+![Deploy EC2](images/5-Workshop/5.2-Prerequisite/ec2.png)
 
 ## Kiến trúc container
 
@@ -72,7 +72,7 @@ EC2 nên dùng **IAM Instance Role** (không dùng Access Key) cho Bedrock và S
 | End-to-end | Hỏi câu pháp luật trên chatbot |
 | Log container | `docker compose logs api streamlit` |
 
-![Hoàn tất deploy](/images/5-Workshop/5.2-Prerequisite/complete.png)
+![Hoàn tất deploy](images/5-Workshop/5.2-Prerequisite/complete.png)
 
 ## IAM trên EC2
 

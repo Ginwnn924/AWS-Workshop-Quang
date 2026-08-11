@@ -109,7 +109,7 @@ Chi tiết: [Backend](5.1.2-backend/)
 | **App storage** | `src/storage/` | User, session chat, feedback |
 | **Docker deploy** | `deploy/Dockerfile`, `deploy/docker-compose.yml` | Chạy container hóa |
 
-![Kiến trúc Vietnamese Legal RAG Chatbot](/images/2-Proposal/legal_chatbot_architecture.png)
+![Kiến trúc Vietnamese Legal RAG Chatbot](images/2-Proposal/legal_chatbot_architecture.png)
 
 Luồng thể hiện rõ nhất trong repo là: **Streamlit :8501** → **`POST /ask`** ở `src/api/main.py` → **`QAService`** → **vector store / model** → trả **answer + sources**.
 

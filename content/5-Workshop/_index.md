@@ -28,7 +28,7 @@ This workshop presents the **Law-Chatbot** project — a Vietnamese legal Q&A sy
 
 ## AWS architecture
 
-![Vietnamese Legal RAG Chatbot architecture](/images/2-Proposal/legal_chatbot_architecture.png)
+![Vietnamese Legal RAG Chatbot architecture](images/2-Proposal/legal_chatbot_architecture.png)
 
 **AWS services used:** EC2, ALB, VPC/Subnet/Security Group, S3, SQS + DLQ, Lambda, Bedrock, RDS PostgreSQL + pgvector, DynamoDB, Cognito, CloudFormation, IAM, CloudWatch/SNS.
 
