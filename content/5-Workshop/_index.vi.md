@@ -1,57 +1,42 @@
 ---
 title: "Workshop"
-date: 2024-01-01
+date: 2026-08-11
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Workshop: Vietnamese Legal RAG Chatbot
+## LLMOps trên AWS với Vietnamese Legal RAG Chatbot
 
 ## Tổng quan
 
-Phần Workshop này chỉ trình bày **đến mục 5.2.2**, bám trực tiếp theo codebase **`vietnamese-legal-llmops`** hiện có trong workspace. Trọng tâm là:
+Workshop này trình bày toàn bộ quy trình xây dựng, triển khai và vận hành **Vietnamese Legal RAG Chatbot** — hệ thống hỏi đáp pháp luật Việt Nam dựa trên mô hình Retrieval-Augmented Generation (RAG) — trên nền tảng Amazon Web Services (AWS). Dự án áp dụng kiến trúc LLMOps hiện đại với pipeline ingestion tự động, vector database trên Amazon RDS PostgreSQL (pgvector), xác thực người dùng qua Amazon Cognito và hệ thống đánh giá chất lượng toàn diện.
 
-- Tổng quan hệ thống Law-Chatbot
-- Kiến trúc `Frontend` và `Backend`
-- Các thành phần repo đang có sẵn
-- Chuẩn bị source code và dữ liệu demo trước khi chạy
+Workshop được chia thành bốn giai đoạn chính:
 
-**Bài toán:** văn bản pháp luật Việt Nam dài, phân mảnh và khó tra cứu thủ công.
+* **Hạ tầng nền tảng**: Thiết lập Cognito User Pool, DynamoDB, S3, SQS và RDS PostgreSQL với pgvector extension
+* **Pipeline RAG**: Xây dựng quy trình embedding, chunking, vector store và retrieval với reranking
+* **Triển khai ứng dụng**: Đóng gói Docker, triển khai FastAPI và Streamlit trên EC2 với Docker Compose
+* **Vận hành và đánh giá**: Giám sát hiệu năng, thu thập feedback và đánh giá chất lượng retrieval
 
-**Giải pháp trong repo:** dùng pipeline **RAG** để đọc dữ liệu, chia chunk, tạo embedding, truy xuất đoạn liên quan rồi sinh câu trả lời có nguồn tham khảo.
+## Tổng quan kiến trúc
 
-## Luồng chính trong codebase
+Hệ thống được tổ chức theo năm lớp chính:
 
-{{< mermaid >}}
-graph LR;
-    A["Nguoi dung"] --> B["Streamlit / Chainlit"]
-    B --> C["FastAPI / QAService"]
-    C --> D["Retriever"]
-    D --> E[("pgvector / vector store")]
-    E --> F["Prompt + Generator"]
-    F --> B
-{{< /mermaid >}}
-
-## Nội dung Workshop
-
-| Mục | Nội dung |
+| **Lớp** | **Thành phần** |
 | --- | --- |
-| [5.1 Overview — Kiến trúc dự án](5.1-Workshop-overview/) | Giới thiệu hệ thống, Frontend, Backend, cấu trúc repo |
-| ↳ [5.1.1 Frontend](5.1-Workshop-overview/5.1.1-frontend/) | Streamlit UI, các view, kết nối API |
-| ↳ [5.1.2 Backend](5.1-Workshop-overview/5.1.2-backend/) | FastAPI, RAG Core, các flow xử lý |
-| [5.2 Prerequisites — Chuẩn bị](5.2-Prerequisite/) | Chuẩn bị source code và dữ liệu demo để chạy repo |
+| Ingestion | Amazon S3, Amazon SQS, AWS Lambda, Text Chunking |
+| Embedding & Storage | SentenceTransformers / Bedrock Titan, Amazon RDS PostgreSQL + pgvector |
+| Retrieval & Generation | Cosine Similarity Search, Cross-encoder Reranker, Google Gemini / Amazon Bedrock |
+| Application | FastAPI, Streamlit, Chainlit, Docker Compose |
+| Auth & Monitoring | Amazon Cognito, Amazon DynamoDB, Amazon CloudWatch |
 
-## Tech stack
+## Nội dung
 
-| Lớp | Theo repo hiện tại |
-| --- | --- |
-| UI | Streamlit, Chainlit |
-| API | FastAPI + uvicorn |
-| RAG | Python tự viết trong `src/rag_core` |
-| Embedding | `AITeamVN/Vietnamese_Embedding` hoặc Bedrock embedding |
-| LLM | Gemini mặc định, Bedrock là tùy chọn |
-| Vector store | PostgreSQL + pgvector là đường chạy chính trong `.env.sample` |
-| Auth UI | Username/password trong app DB |
-| Auth API | Có sẵn lớp Cognito auth cho `/api/*` |
-| Chạy local | Python local hoặc Docker Compose |
+1. [Tổng quan workshop](5.1-Workshop-overview/)
+2. [Các bước chuẩn bị](5.2-Prerequiste/)
+3. [Kiến trúc hệ thống](5.3-Structure/)
+4. [Các bước triển khai](5.4-Onprem/)
+5. [Xác minh triển khai và đánh giá hệ thống](5.5-Policy/)
+6. [Tổng quan giao diện và chức năng ứng dụng](5.6-Project-Visual/)
+7. [Dọn dẹp tài nguyên](5.7-Cleanup/)
