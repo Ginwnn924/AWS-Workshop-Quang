@@ -16,7 +16,7 @@ Vietnamese Legal RAG Chatbot là hệ thống cho phép người dùng đặt c�
 
 Giải pháp hướng tới quy mô nội bộ (phòng ban pháp chế, trung tâm nghiên cứu, sinh viên luật) với khoảng 10–50 người dùng đồng thời, corpus ban đầu từ dataset HuggingFace NguyenKH/clean_legal_knowledge và khả năng bổ sung văn bản mới qua kênh admin upload.
 
-**Demo triển khai:** [http://18.143.187.153:8501/](http://18.143.187.153:8501/) (Streamlit trên EC2, ap-southeast-1)
+**Demo triển khai:** [http://18.143.187.153:8501/](http://18.143.187.153:8501/)
 
 ### 2. Tuyên bố vấn đề
 
@@ -31,10 +31,10 @@ Giải pháp hướng tới quy mô nội bộ (phòng ban pháp chế, trung t�
 Xây dựng chatbot RAG trên AWS với ba luồng chính:
 
 1. **Luồng nạp dữ liệu (Ingestion):** Admin upload PDF/TXT lên **Amazon S3** → sự kiện kích hoạt **Amazon SQS** → **AWS Lambda** chunking, gọi **Amazon Bedrock Titan Embeddings**, lưu vector vào **Amazon RDS PostgreSQL (pgvector)**.
-2. **Luồng hỏi đáp (RAG Query):** Người dùng gửi câu hỏi qua giao diện **Chainlit/FastAPI** trên **Amazon EC2** (sau **Application Load Balancer**) → embed câu hỏi → tìm kiếm vector trên RDS → ghép prompt → **Amazon Bedrock LLM** (Claude 3 / Llama 3) sinh câu trả lời → stream về UI.
+2. **Luồng hỏi đáp (RAG Query):** Người dùng gửi câu hỏi qua giao diện **Streamlit/FastAPI** trên **Amazon EC2** (sau **Application Load Balancer**) → embed câu hỏi → tìm kiếm vector trên RDS → ghép prompt → **Amazon Bedrock LLM** (Claude 3 / Llama 3) sinh câu trả lời → stream về UI.
 3. **Luồng vận hành (Observability):** Log/metric lên **Amazon CloudWatch** → **Amazon SNS** gửi email cảnh báo khi lỗi hoặc chi phí vượt ngưỡng.
 
-Xác thực người dùng qua **Amazon Cognito** (nhóm users/editors/admins). Lịch sử hội thoại lưu trên **Amazon DynamoDB** với TTL và GSI phục vụ admin.
+Xác thực người dùng qua **Amazon Cognito** (nhóm users/editors/admins). Lưu lịch sử hội thoại với TTL và GSI phục vụ admin.
 
 **Lợi ích**
 
@@ -45,7 +45,7 @@ Xác thực người dùng qua **Amazon Cognito** (nhóm users/editors/admins). 
 
 ### 3. Kiến trúc giải pháp
 
-![Kiến trúc Vietnamese Legal RAG Chatbot](images/2-Proposal/legal_chatbot_architecture.png)
+![Kiến trúc Vietnamese Legal RAG Chatbot](/AWS-Workshop-Quang/images/2-Proposal/legal_chatbot_architecture.jpg)
 
 **Dịch vụ AWS sử dụng**
 
@@ -58,11 +58,9 @@ Xác thực người dùng qua **Amazon Cognito** (nhóm users/editors/admins). 
 | **Amazon S3** | Lưu văn bản gốc, manifest upload, vector store artefact |
 | **AWS Lambda** | Xử lý ingestion: đọc S3, chunk, embed, ghi RDS |
 | **Amazon SQS + DLQ** | Hàng đợi ingestion, retry và dead-letter |
-| **Amazon DynamoDB** | Lưu lịch sử chat, conversation metadata |
 | **Amazon Cognito** | Xác thực JWT, RBAC users/editors/admins |
 | **Amazon VPC** | Public/private/isolated subnet, security group |
 | **VPC Endpoints** | Truy cập S3, Bedrock, DynamoDB không qua Internet |
-| **Amazon CloudWatch + SNS** | Logging, metric, alarm, thông báo email |
 | **AWS CloudFormation** | IaC deploy foundation stack (Cognito, DynamoDB, S3, SQS) |
 | **AWS Secrets Manager** | Quản lý RDS password, API key (production) |
 
@@ -83,7 +81,7 @@ Xác thực người dùng qua **Amazon Cognito** (nhóm users/editors/admins). 
 | 1. Nghiên cứu & prototype local | RAG pipeline, SQLite vector store, FastAPI | Tuần 4–5 |
 | 2. Tích hợp AWS cơ bản | S3 sync, Docker, Chainlit | Tuần 6–7 |
 | 3. Production data layer | RDS pgvector, Bedrock | Tuần 7 |
-| 4. Auth & foundation IaC | Cognito, DynamoDB, CloudFormation stack | Tuần 8 |
+| 4. Auth & foundation IaC | Cognito, CloudFormation stack | Tuần 8 |
 | 5. Ingestion serverless | S3 → SQS → Lambda → RDS | Tuần 8 |
 | 6. Tối ưu & báo cáo | Benchmark, CloudWatch, hoàn thiện báo cáo | Tuần 8 |
 
@@ -110,7 +108,6 @@ Mã nguồn gồm src/rag_core/, src/api/, infra/foundation.yaml, deploy/Dockerf
 * **Tuần 3–4 (06/07 – 17/07):** VPC workshop, nghiên cứu RAG và dataset pháp luật.
 * **Tuần 5–6 (20/07 – 31/07):** Prototype local, FastAPI, Docker, Chainlit.
 * **Tuần 7–8 (03/08 – 14/08):** Bedrock, RDS pgvector, Cognito, Lambda ingestion, benchmark, báo cáo.
-* **Sau thực tập:** HA deployment, WAF, frontend admin, chuyển toàn bộ embedding sang Bedrock Titan.
 
 ### 6. Ước tính ngân sách (dev/staging, ap-southeast-1)
 
@@ -120,13 +117,11 @@ Mã nguồn gồm src/rag_core/, src/api/, infra/foundation.yaml, deploy/Dockerf
 | RDS db.t3.micro PostgreSQL | ~15 USD |
 | Amazon Bedrock (embed + LLM, ~10K query) | ~5–20 USD |
 | S3 Standard (~10 GB) | ~0.25 USD |
-| DynamoDB on-demand | ~1 USD |
 | Lambda + SQS | ~1 USD |
 | Cognito | Free tier (< 50K MAU) |
 | CloudWatch + SNS | ~2 USD |
 | **Tổng ước tính** | **~40–55 USD/tháng** |
 
-*Ghi chú:* Chi phí production với ALB, 2 EC2, RDS Multi-AZ sẽ cao hơn. Có thể giảm bằng ECS Fargate Spot, RDS Reserved Instance, hoặc tắt instance ngoài giờ lab.
 
 ### 7. Đánh giá rủi ro
 
@@ -143,4 +138,4 @@ Mã nguồn gồm src/rag_core/, src/api/, infra/foundation.yaml, deploy/Dockerf
 * Prototype chatbot trả lời câu hỏi pháp luật tiếng Việt với nguồn trích dẫn.
 * Pipeline ingestion tự động cho văn bản PDF/TXT mới.
 * Nền tảng mở rộng cho nghiên cứu NLP pháp luật, đánh giá RAG metrics (Recall@k, MRR).
-* Kiến thức thực hành AWS: EC2, S3, RDS, Lambda, Bedrock, Cognito, DynamoDB, VPC, CloudFormation.
+* Kiến thức thực hành AWS: EC2, S3, RDS, Lambda, Bedrock, Cognito, VPC, CloudFormation.

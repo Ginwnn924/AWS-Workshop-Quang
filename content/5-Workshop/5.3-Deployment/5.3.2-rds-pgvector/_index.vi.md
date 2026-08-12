@@ -5,82 +5,120 @@ weight: 2
 chapter: false
 pre: " <b> 5.3.2. </b> "
 ---
+# Triển khai Amazon RDS PostgreSQL
 
-# RDS — PostgreSQL + pgvector
+**Mục tiêu:** Khởi tạo cơ sở dữ liệu quan hệ Amazon RDS PostgreSQL có tích hợp extension `pgvector`. RDS sẽ đóng vai trò là vector store để lưu trữ các chunk văn bản luật, cho phép QAService thực hiện embedding và chạy similarity search để truy xuất các đoạn văn liên quan nhất.
 
-RDS PostgreSQL kết hợp extension **pgvector** là vector store cho các chunk văn bản luật. QAService embed câu hỏi và chạy similarity search để lấy đoạn văn liên quan.
+## Tổng quan Sơ đồ Kiến trúc
 
-## Vai trò trong kiến trúc
+![1786474957256](image/_index.vi/1786474957256.png)
 
-{{< mermaid >}}
-graph TB;
-    Q["Cau hoi"] --> E["Embedding"]
-    E --> S["Similarity search"]
-    S --> PG[("RDS legal_chunks")]
-    PG --> C["Top-k chunks"]
-    C --> P["Prompt + LLM"]
-{{< /mermaid >}}
+---
 
-## Bước 1 — Tạo RDS instance
+## Bước 1: Khởi tạo RDS instance
 
-1. **Amazon RDS** → **Create database** → **PostgreSQL**
-2. Engine: PostgreSQL 15+ (hỗ trợ pgvector)
-3. Instance: `db.t3.micro` hoặc `db.t3.small` cho lab
-4. Storage: 20 GB+ gp3
-5. VPC: cùng VPC với EC2; **không public** trừ khi lab yêu cầu
-6. Security Group: inbound **5432** chỉ từ SG của EC2
+Quá trình này thiết lập một database instance an toàn, nằm gọn trong mạng nội bộ (Private Subnet) và chỉ cho phép kết nối từ hệ thống của dự án.
 
-## Bước 2 — Bật pgvector và tạo bảng
+* Truy cập vào AWS Management Console, tìm kiếm dịch vụ **RDS** và chọn **Databases** ở menu bên trái.
+* Nhấn vào nút màu cam **Create database**.
 
-Kết nối bằng psql hoặc SQL client:
+![1786468170065](image/_index.vi/1786468170065.png)
+
+* **Engine options** chọn **PostgreSQL**.
+
+![1786468416661](image/_index.vi/1786468416661.png)
+
+* Chọn phương pháp tạo cơ sở dữ liệu là **Full configuration**
+
+![1786468631195](image/_index.vi/1786468631195.png)
+
+* Trong phần **Settings**:
+
+  * **DB instance identifier**: Nhập `vector-db-server`.
+  * **Master username**: Nhập `postgres`.
+  * **Master password**: Nhập`aws-law-chatbot`.
+
+![1786469931116](image/_index.vi/1786469931116.png)
+
+![1786469064842](image/_index.vi/1786469064842.png)
+
+* Tại mục **Instance configuration**, chọn **Burstable classes** và cấu hình kích thước là `db.t4.micro`.
+* Tại mục **Storage**, chọn loại **General Purpose SSD (gp3)** và dung lượng Allocated storage là **20 GB**.
+
+![1786469135983](image/_index.vi/1786469135983.png)
+
+* Trong phần **Connectivity**:
+  * **Virtual private cloud (VPC)**: Chọn `law-chatbot-vpc` đã tạo ở bài trước.
+  * **Public access**: Chọn **No** (Database không được phép truy cập từ Internet).
+  * **VPC security group (firewall)**: Chọn **Choose existing** và chọn `law-chatbot-rds-sg`.
+
+![1786469301809](image/_index.vi/1786469301809.png)
+
+![1786469346246](image/_index.vi/1786469346246.png)
+
+* Ở mục **Additional configuration** (phần Database options), nhập tên cho cơ sở dữ liệu khởi tạo ban đầu là `postgres`.
+
+![1786469691414](image/_index.vi/1786469691414.png)
+
+* Cuộn xuống cuối trang và nhấn **Create database**. Hệ thống sẽ mất khoảng 5-10 phút để khởi tạo.
+
+![1786469714926](image/_index.vi/1786469714926.png)
+
+* Khi trạng thái của database chuyển sang **Available**, sao chép giá trị ở mục **Endpoint** trong tab *Connectivity & security*.
+
+![1786470046580](image/_index.vi/1786470046580.png)
+
+---
+
+## Bước 2: Bật pgvector và tạo bảng cấu trúc
+
+* Cài đặt extension Database Clinent trên VSCode, bấm Add Conection và điền các thông số ở mục Endpoint.
+
+![1786470519839](image/_index.vi/1786470519839.png)
+
+* Sau khi kết nối thành công, mở cửa sổ Query (SQL Editor) và dán đoạn mã khởi tạo sau:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS vector;
 
 CREATE TABLE IF NOT EXISTS legal_chunks (
-    chunk_id    TEXT PRIMARY KEY,
-    doc_id      TEXT,
-    title       TEXT,
-    content     TEXT,
-    embedding   vector(1024),  -- dimension khớp embedding model
-    metadata    JSONB,
-    created_at  TIMESTAMPTZ DEFAULT NOW()
+    chunk_id   TEXT PRIMARY KEY,
+    doc_id     TEXT,
+    title      TEXT,
+    content    TEXT,
+    embedding  vector(1024),  -- dimension khớp embedding model
+    metadata   JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW()
 );
 ```
 
-Chạy migration trong `migrations/` nếu project cung cấp.
+## Bước 3: Cấu hình biến môi trường (`.env`)
 
-{{% notice note %}}
-Index HNSW / IVFFlat chỉ là tối ưu tùy chọn khi corpus lớn — không bắt buộc cho lab workshop.
-{{% /notice %}}
+Điền các thông số vào file .env
 
-## Bước 3 — Cấu hình `.env`
-
-```
 USE_PGVECTOR=true
-PGHOST=<rds-endpoint>.ap-southeast-1.rds.amazonaws.com
+
+PGHOST=vector-db-server.c3cec066gyal.ap-southeast-1.rds.amazonaws.com
+
 PGPORT=5432
-PGDATABASE=legalchatbot
+
+PGDATABASE=postgres
+
 PGUSER=postgres
-PGPASSWORD=<password>
+
+PGPASSWORD=aws-law-chatbot
+
+PGSSLMODE=require
+
+## Bước 4: Build index (Đưa dữ liệu vào Database)
+
+Sau khi cấu hình xong, tiến hành chạy kịch bản nhúng dữ liệu vào vector store.
+
+* Mở Terminal (Command Prompt) tại thư mục gốc của dự án trên local.
+* Gõ và thực thi lệnh sau:
+
 ```
-
-## Bước 4 — Build index
-
-**Local / EC2 một lần:**
-
-```bash
 python scripts/build_index.py
 ```
 
-**Ingestion cloud:** Lambda ghi chunk sau khi upload S3 (xem [5.5 Lambda](5.5-lambda/)).
-
-## Hành vi truy vấn
-
-| Cấu hình | Mục đích |
-| --- | --- |
-| `TOP_K` | Số chunk trả về mỗi câu hỏi |
-| Query timeout | Tránh truy vấn similarity quá lâu |
-| Fallback exact search | Dùng khi chưa tạo index HNSW/IVFFlat |
-
-
+Chờ hệ thống thực hiện nhúng (embedding) và đẩy dữ liệu lên bảng `legal_chunks`.

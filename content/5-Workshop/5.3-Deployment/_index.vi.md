@@ -5,7 +5,6 @@ weight: 3
 chapter: false
 pre: " <b> 5.3. </b> "
 ---
-
 Phần này hướng dẫn triển khai Vietnamese Legal RAG Chatbot trên AWS theo đúng thứ tự phụ thuộc: VPC/Network trước, sau đó RDS, S3, Lambda ingestion, Bedrock, DynamoDB, Cognito và cuối cùng là EC2 Docker Compose.
 
 ## Nội dung triển khai
@@ -14,7 +13,5 @@ Phần này hướng dẫn triển khai Vietnamese Legal RAG Chatbot trên AWS t
 2. [RDS PostgreSQL + pgvector](5.3.2-rds-pgvector/) — tạo RDS instance, bật pgvector, tạo bảng và build vector index.
 3. [S3 — Upload data](5.3.3-s3-upload/) — tạo bucket, cấu hình prefix, upload tài liệu và kết nối S3 Event → SQS.
 4. [Lambda — Ingestion](5.3.4-lambda/) — cấu hình Lambda xử lý tài liệu: SQS trigger, chunk, embed, ghi pgvector.
-5. [Bedrock — Embedding và LLM](5.3.5-bedrock/) — bật model access, cấu hình embedding và LLM provider trên AWS.
-6. [DynamoDB — Chat history](5.3.6-dynamodb/) — tạo bảng lịch sử hội thoại với TTL và GSI.
-7. [Cognito — Auth và RBAC](5.3.7-cognito/) — tạo User Pool, groups, tích hợp JWT vào FastAPI.
-8. [Deploy Docker trên EC2](5.3.8-ec2-deploy/) — build image, Docker Compose, deploy và health check.
+5. [Cognito — Auth và RBAC](5.3.5-cognito/) — tạo User Pool, groups, tích hợp JWT vào FastAPI.
+6. [Deploy Docker trên EC2](5.3.6-ec2-deploy/) — build image, Docker Compose, deploy và health check.

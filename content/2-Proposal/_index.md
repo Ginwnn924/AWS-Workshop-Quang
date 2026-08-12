@@ -16,7 +16,7 @@ Vietnamese Legal RAG Chatbot allows users to ask questions in Vietnamese about l
 
 The solution targets internal use (legal departments, research centers, law students) with roughly 10–50 concurrent users. The initial corpus comes from the HuggingFace dataset NguyenKH/clean_legal_knowledge, with the ability to add new documents via admin upload.
 
-**Live demo:** [http://18.143.187.153:8501/](http://18.143.187.153:8501/) (Streamlit on EC2, ap-southeast-1)
+**Live demo:** [http://18.143.187.153:8501/](http://18.143.187.153:8501/)
 
 ### 2. Problem Statement
 
@@ -31,10 +31,10 @@ The solution targets internal use (legal departments, research centers, law stud
 Build an RAG chatbot on AWS with three main flows:
 
 1. **Ingestion flow:** Admin uploads PDF/TXT to **Amazon S3** → event triggers **Amazon SQS** → **AWS Lambda** performs chunking, calls **Amazon Bedrock Titan Embeddings**, stores vectors in **Amazon RDS PostgreSQL (pgvector)**.
-2. **RAG query flow:** User sends a question via **Chainlit/FastAPI** on **Amazon EC2** (behind **Application Load Balancer**) → embed question → vector search on RDS → build prompt → **Amazon Bedrock LLM** (Claude 3 / Llama 3) generates answer → stream to UI.
+2. **RAG query flow:** User sends a question via **Streamlit/FastAPI** on **Amazon EC2** (behind **Application Load Balancer**) → embed question → vector search on RDS → build prompt → **Amazon Bedrock LLM** (Claude 3 / Llama 3) generates answer → stream to UI.
 3. **Operations flow (Observability):** Logs/metrics to **Amazon CloudWatch** → **Amazon SNS** sends email alerts on errors or cost threshold breaches.
 
-User authentication via **Amazon Cognito** (users/editors/admins groups). Conversation history stored in **Amazon DynamoDB** with TTL and GSI for admin use.
+User authentication via **Amazon Cognito** (users/editors/admins groups). Stored conversation history with TTL and GSI for admin use.
 
 **Benefits**
 
@@ -45,7 +45,7 @@ User authentication via **Amazon Cognito** (users/editors/admins groups). Conver
 
 ### 3. Solution Architecture
 
-![Vietnamese Legal RAG Chatbot Architecture](images/2-Proposal/legal_chatbot_architecture.png)
+![Vietnamese Legal RAG Chatbot Architecture](/AWS-Workshop-Quang/images/2-Proposal/legal_chatbot_architecture.jpg)
 
 **AWS Services Used**
 
@@ -58,11 +58,9 @@ User authentication via **Amazon Cognito** (users/editors/admins groups). Conver
 | **Amazon S3** | Store source documents, upload manifests, vector store artefacts |
 | **AWS Lambda** | Ingestion processing: read S3, chunk, embed, write RDS |
 | **Amazon SQS + DLQ** | Ingestion queue, retry and dead-letter handling |
-| **Amazon DynamoDB** | Chat history and conversation metadata |
 | **Amazon Cognito** | JWT authentication, RBAC for users/editors/admins |
 | **Amazon VPC** | Public/private/isolated subnets, security groups |
 | **VPC Endpoints** | Access S3, Bedrock, DynamoDB without Internet |
-| **Amazon CloudWatch + SNS** | Logging, metrics, alarms, email notifications |
 | **AWS CloudFormation** | IaC deploy foundation stack (Cognito, DynamoDB, S3, SQS) |
 | **AWS Secrets Manager** | Manage RDS password, API keys (production) |
 
@@ -83,7 +81,7 @@ User authentication via **Amazon Cognito** (users/editors/admins groups). Conver
 | 1. Research & local prototype | RAG pipeline, SQLite vector store, FastAPI | Weeks 4–5 |
 | 2. Basic AWS integration | S3 sync, Docker, Chainlit | Weeks 6–7 |
 | 3. Production data layer | RDS pgvector, Bedrock | Week 7 |
-| 4. Auth & foundation IaC | Cognito, DynamoDB, CloudFormation stack | Week 8 |
+| 4. Auth & foundation IaC | Cognito, CloudFormation stack | Week 8 |
 | 5. Serverless ingestion | S3 → SQS → Lambda → RDS | Week 8 |
 | 6. Optimization & reporting | Benchmark, CloudWatch, finalize report | Week 8 |
 
@@ -120,7 +118,6 @@ Source code includes src/rag_core/, src/api/, infra/foundation.yaml, deploy/Dock
 | RDS db.t3.micro PostgreSQL | ~$15 USD |
 | Amazon Bedrock (embed + LLM, ~10K queries) | ~$5–20 USD |
 | S3 Standard (~10 GB) | ~$0.25 USD |
-| DynamoDB on-demand | ~$1 USD |
 | Lambda + SQS | ~$1 USD |
 | Cognito | Free tier (< 50K MAU) |
 | CloudWatch + SNS | ~$2 USD |
@@ -143,4 +140,4 @@ Source code includes src/rag_core/, src/api/, infra/foundation.yaml, deploy/Dock
 * Prototype chatbot answering Vietnamese legal questions with source citations.
 * Automated ingestion pipeline for new PDF/TXT documents.
 * Extensible platform for legal NLP research and RAG metrics evaluation (Recall@k, MRR).
-* Hands-on AWS knowledge: EC2, S3, RDS, Lambda, Bedrock, Cognito, DynamoDB, VPC, CloudFormation.
+* Hands-on AWS knowledge: EC2, S3, RDS, Lambda, Bedrock, Cognito, VPC, CloudFormation.

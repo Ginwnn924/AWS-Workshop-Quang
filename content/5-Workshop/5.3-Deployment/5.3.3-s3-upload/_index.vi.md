@@ -1,74 +1,53 @@
 ---
-title: "S3 — Upload data"
+title: "S3 — Tạo Bucket"
 date: 2026-08-11
 weight: 3
 chapter: false
 pre: " <b> 5.3.3. </b> "
 ---
+# Triển khai tạo Bucket - S3
 
-# S3 — Tạo bucket và upload data
+## Tổng quan Sơ đồ Kiến trúc
 
-Amazon S3 lưu tài liệu pháp luật và manifest ingestion. Khi có file mới, S3 event kích hoạt luồng xử lý phía sau (SQS → Lambda → RDS).
+![1786475100342](image/_index.vi/1786475100342.png)
 
-![Tổng quan S3](images/5-Workshop/5.3-S3-vpc/overview.png)
+## Tạo các bucket của dự án
+**Bước 1: Tạo Bucket**
+- Đăng nhập AWS Console tại Region `ap-southeast-1`, tìm **Amazon S3** và chọn **Buckets → Create bucket.**
+- Đặt tên
 
-## Vai trò trong hệ thống
+![1786472818649](image/_index.vi/1786472818649.png)
 
-| Prefix | Mục đích |
-| --- | --- |
-| `incoming/files/` | PDF/TXT do admin upload |
-| `incoming/manifests/` | JSON metadata cho từng tài liệu |
+![1786472832913](image/_index.vi/1786472832913.png)
 
-{{< mermaid >}}
-graph LR;
-    A["Admin"] -->|presigned URL| B["S3 bucket"]
-    B --> C["incoming/files"]
-    B --> D["incoming/manifests"]
-    B -->|ObjectCreated| E["SQS"]
-    E --> F["Lambda"]
-    F --> G[("RDS pgvector")]
-{{< /mermaid >}}
+- **Giữ nguyên** các cài đặt
+- Ấn nút **Tạo**
 
-## Bước 1 — Tạo bucket
+![1786472896121](image/_index.vi/1786472896121.png)
 
-1. Mở **Amazon S3** → **Create bucket**
-2. Tên: ví dụ `legal-documents-<account-id>-ap-southeast-1`
-3. Region: **ap-southeast-1** (cùng region với các tài nguyên khác)
-4. Block public access: **bật**
-5. Bật versioning (tùy chọn, khuyến nghị cho production)
+**Bước 2**
+- Sau khi tạo xong thì ta ấn vào **Bucket** vừa tạo
+- Ấn vào tab **Properties -> Tìm Bucket Versioning -> Edit -> Enable -> Save changes**
 
-![Tạo bucket](images/5-Workshop/5.3-S3-vpc/create-button.png)
+![1786472922395](image/_index.vi/1786472922395.png)
 
-## Bước 2 — Cấu hình `.env`
+![1786472929548](image/_index.vi/1786472929548.png)
 
-```
-USE_S3=true
-LEGAL_DOCUMENTS_BUCKET=legal-documents-<account-id>-ap-southeast-1
-AWS_DEFAULT_REGION=ap-southeast-1
-```
+**Bước 3**
+- Ở bước này sẽ tiếp tục tạo DLQ (Dead letter queue)
+- Vào **AWS Console** → **SQS** → **Queues** → **Create queue**. Chọn 
+Type: **Standard**
 
-## Bước 3 — Upload qua admin API hoặc CLI
+![1786472957161](image/_index.vi/1786472957161.png)
+**Bước 4**
+- Tiếp theo sẽ tiếp tục tạo **Main Queue**. Ở mục **Configuration** chỉnh **Visibility Timeout: 60s**
 
-**Luồng production:** admin gọi `POST /api/admin/documents/upload-url` → client PUT file lên S3.
+![1786472998924](image/_index.vi/1786472998924.png)
 
-**Lab / đồng bộ:** dùng `scripts/sync_to_s3.py`:
+- Sau đó tìm phần **Dead-letter-queue -> Chọn Enable -> Chọn DLQ nãy vừa tạo**
 
-```bash
-python scripts/sync_to_s3.py --bucket $LEGAL_DOCUMENTS_BUCKET
-```
+![1786473010263](image/_index.vi/1786473010263.png)
 
-**Ví dụ CLI thủ công:**
+- Sau đó lấy ARN của **Main Queue**
 
-```bash
-aws s3 cp data_demo/sample.pdf s3://$LEGAL_DOCUMENTS_BUCKET/incoming/files/sample.pdf
-aws s3 cp data_demo/sample.manifest.json s3://$LEGAL_DOCUMENTS_BUCKET/incoming/manifests/sample.manifest.json
-```
-
-## Bước 4 — Kết nối S3 → SQS (xem trước)
-
-Cấu hình S3 event notification trên prefix `incoming/files/` gửi message tới ingestion queue (chi tiết ở [5.5 Lambda](5.5-lambda/)).
-
-{{% notice info %}}
-Mỗi file upload nên có manifest tương ứng trong `incoming/manifests/` để Lambda biết tiêu đề, loại tài liệu và metadata.
-{{% /notice %}}
-
+![1786473020049](image/_index.vi/1786473020049.png)
